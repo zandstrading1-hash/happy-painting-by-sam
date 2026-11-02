@@ -516,7 +516,7 @@
         G = new Float32Array(n).fill(255);
         for (let y = 2; y < H - 2; y++) for (let x = 2; x < W - 2; x++) {
           const i = y * W + x, a = i - 2, b = i + 2, u = i - 2 * W, d = i + 2 * W;
-          G[i] = Math.abs(gY[b] - gY[a]) + Math.abs(gY[d] - gY[u]) + 1.5 * (Math.abs(gCb[b] - gCb[a]) + Math.abs(gCb[d] - gCb[u]) + Math.abs(gCr[b] - gCr[a]) + Math.abs(gCr[d] - gCr[u]));
+          G[i] = Math.abs(gY[b] - gY[a]) + Math.abs(gY[d] - gY[u]) + 1.0 * (Math.abs(gCb[b] - gCb[a]) + Math.abs(gCb[d] - gCb[u]) + Math.abs(gCr[b] - gCr[a]) + Math.abs(gCr[d] - gCr[u]));
         }
         layer = new Int16Array(n).fill(-1);
         layers = []; history = []; selected = -1; last = null;
@@ -599,18 +599,58 @@
       return layers.length - 1;
     }
 
+    // square dilation: a pixel is set if any pixel within r of it (on both axes) is set
+    function dilate(src, r) {
+      const a = new Uint8Array(src.length), b = new Uint8Array(src.length);
+      for (let y = 0; y < H; y++) {
+        const o = y * W;
+        let c = 0;
+        for (let x = 0; x < Math.min(r, W); x++) c += src[o + x];
+        for (let x = 0; x < W; x++) {
+          if (x + r < W) c += src[o + x + r];
+          if (x - r - 1 >= 0) c -= src[o + x - r - 1];
+          a[o + x] = c > 0 ? 1 : 0;
+        }
+      }
+      for (let x = 0; x < W; x++) {
+        let c = 0;
+        for (let y = 0; y < Math.min(r, H); y++) c += a[y * W + x];
+        for (let y = 0; y < H; y++) {
+          if (y + r < H) c += a[(y + r) * W + x];
+          if (y - r - 1 >= 0) c -= a[(y - r - 1) * W + x];
+          b[y * W + x] = c > 0 ? 1 : 0;
+        }
+      }
+      return b;
+    }
+
+    // unpainted creases, specks and slivers enclosed by paint of this colour (a morphological
+    // close, so the outer edge of the paint never moves onto trim or ceilings)
+    function gaps(li) {
+      const n = W * H, hex = layers[li].hex, m = new Uint8Array(n);
+      for (let i = 0; i < n; i++) if (layer[i] >= 0 && layers[layer[i]].hex === hex) m[i] = 1;
+      const r = Math.max(2, Math.round(Math.max(W, H) / 350));
+      const outside = dilate(m, r);
+      for (let i = 0; i < n; i++) outside[i] ^= 1;
+      const open = dilate(outside, r), add = [];
+      for (let i = 0; i < n; i++) if (!open[i] && !m[i] && layer[i] < 0) add.push(i);
+      return add;
+    }
+
     function paint(x, y, li) {
-      const idx = region(x, y, +tolIn.value);
+      const reg = region(x, y, +tolIn.value);
       let added = false;
-      if (li == null) { li = newLayer(cur.hex, idx); added = true; }
-      const prev = new Int16Array(idx.length);
-      idx.forEach((i, k) => { prev[k] = layer[i]; layer[i] = li; });
-      history.push({ idx, prev, added });
+      if (li == null) { li = newLayer(cur.hex, reg); added = true; }
+      const idx = [], prev = [];
+      const put = i => { idx.push(i); prev.push(layer[i]); layer[i] = li; };
+      reg.forEach(put);
+      gaps(li).forEach(put);
+      history.push({ idx: Uint32Array.from(idx), prev: Int16Array.from(prev), added });
       selected = li;
       last = { x, y, li, added };
       render();
       syncButtons();
-      const small = idx.length < W * H * 0.004;
+      const small = reg.length < W * H * 0.004;
       setStatus(small ? 'Small spot: try more spread' : 'Painted ✓', small ? 'is-busy' : 'is-done');
     }
 
@@ -637,7 +677,7 @@
         let f = Math.pow(Y[i] / L.meanY, 0.8);
         f = f < 0.3 ? 0.3 : f > 1.6 ? 1.6 : f;
         const x = i % W;
-        const edge = (x > 0 && layer[i - 1] !== li) || (x < W - 1 && layer[i + 1] !== li) || (i >= W && layer[i - W] !== li) || (i < n - W && layer[i + W] !== li);
+        const edge = (x > 0 && layer[i - 1] < 0) || (x < W - 1 && layer[i + 1] < 0) || (i >= W && layer[i - W] < 0) || (i < n - W && layer[i + W] < 0);
         const p = i * 4;
         for (let c = 0; c < 3; c++) {
           let v = rgb[c] * f;
