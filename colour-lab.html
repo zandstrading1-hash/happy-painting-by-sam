@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Colour Lab | Happy Painting by Sam, Windsor</title>
-  <meta name="description" content="Try wall colours on a living room before you paint. A Colour Lab from Happy Painting by Sam, painters in Windsor and Essex County." />
+  <meta name="description" content="Try wall colours on a living room, or on a photo of your own room, before you paint. A Colour Lab from Happy Painting by Sam, painters in Windsor and Essex County." />
   <meta name="robots" content="noindex, nofollow" />
   <meta name="theme-color" content="#0a0b0d" />
   <meta property="og:title" content="Colour Lab | Happy Painting by Sam, Windsor" />
-  <meta property="og:description" content="Try wall colours on a living room before you paint. A Colour Lab from Happy Painting by Sam, painters in Windsor and Essex County." />
+  <meta property="og:description" content="Try wall colours on a living room, or on a photo of your own room, before you paint. A Colour Lab from Happy Painting by Sam, painters in Windsor and Essex County." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="img/open-plan-blue-walls.webp" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0b0d'/%3E%3Cpath d='M50 20a22 22 0 1 1-30-9' fill='none' stroke='%231fa3ad' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M19 35l13-11 13 11M23 33v13h18V33' fill='none' stroke='%23fff' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M12 52a22 22 0 0 0 30 4' fill='none' stroke='%23f28a2e' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E" />
@@ -23,7 +23,7 @@
   <a class="skip" href="#main">Skip to content</a>
 
   <!-- ============ HEADER ============ -->
-  <header class="header" id="top">
+  <header class="header">
     <div class="wrap header-inner">
       <a href="index.html" class="logo" aria-label="Happy Painting by Sam, home">
         <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true">
@@ -76,7 +76,7 @@
       <div class="wrap">
         <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">Colour Lab</span></nav>
         <h1 class="ph-title">Take a colour <em>for a spin.</em></h1>
-        <p class="ph-lede">Nine colours, one living room and a roller. Find the vibe you like, then bring it to your free estimate.</p>
+        <p class="ph-lede">Nine colours, one living room and a roller. Then try them on a photo of your own room and bring your favourite to your free estimate.</p>
       </div>
     </section>
 
@@ -244,6 +244,81 @@
       </div>
     </section>
 
+    <!-- ============ PAINT YOUR OWN ROOM ============ -->
+    <section class="myroom" id="your-room" aria-labelledby="mr-title">
+      <div class="wrap">
+        <div class="mr-head">
+          <p class="eyebrow reveal">Your room</p>
+          <h2 id="mr-title" class="reveal split">Now try it on <em>your</em> walls.</h2>
+          <p class="reveal">Snap or upload a photo of your room, pick a colour and tap a wall. Tap more walls to paint them too. Your photo stays on your device. Nothing is uploaded.</p>
+        </div>
+
+        <div class="mr-grid">
+          <div class="mr-tools reveal">
+            <label class="btn btn--orange mr-upload">
+              <input class="mr-file" type="file" accept="image/*" />
+              <span class="mr-upload-txt">Choose a room photo</span>
+            </label>
+
+            <div class="swatches mr-swatches" role="radiogroup" aria-label="Paint colour">
+              <button class="sw" role="radio" aria-checked="true" style="--c:#1fa3ad" data-name="Happy Teal">&nbsp;</button>
+              <button class="sw" role="radio" aria-checked="false" style="--c:#2f5f7f" data-name="Detroit River Blue">&nbsp;</button>
+              <button class="sw" role="radio" aria-checked="false" style="--c:#8fa58a" data-name="Ojibway Sage">&nbsp;</button>
+              <button class="sw" role="radio" aria-checked="false" style="--c:#e9b949" data-name="Tecumseh Corn">&nbsp;</button>
+              <button class="sw" role="radio" aria-checked="false" style="--c:#c27a5a" data-name="Kingsville Clay">&nbsp;</button>
+              <button class="sw" role="radio" aria-checked="false" style="--c:#6e4a5e" data-name="Walkerville Plum">&nbsp;</button>
+              <button class="sw" role="radio" aria-checked="false" style="--c:#263a57" data-name="Belle River Navy">&nbsp;</button>
+              <button class="sw" role="radio" aria-checked="false" style="--c:#e8dfcd" data-name="Lakeshore Linen">&nbsp;</button>
+              <button class="sw" role="radio" aria-checked="false" style="--c:#34373c" data-name="Sam's Charcoal">&nbsp;</button>
+            </div>
+
+            <div class="lab-readout mr-readout" aria-live="polite">
+              <label class="lab-chip mr-custom" style="--c:#1fa3ad" title="Pick any colour">
+                <input type="color" value="#1fa3ad" aria-label="Pick any colour" />
+              </label>
+              <div><b class="mr-name">Happy Teal</b><small class="mr-hex">#1FA3AD</small></div>
+              <span class="lab-status mr-status">Add a photo</span>
+            </div>
+
+            <div class="trim-toggle mr-modes" role="group" aria-label="Tool">
+              <span>Tool</span>
+              <button class="tt is-on" data-mode="fill" aria-pressed="true">Tap to fill</button>
+              <button class="tt" data-mode="brush" aria-pressed="false">Brush</button>
+              <button class="tt" data-mode="erase" aria-pressed="false">Eraser</button>
+            </div>
+
+            <label class="mr-spread">
+              <span>Spread <small>Raise it if the paint misses bits of wall, lower it if it spills onto other things. Touch up with the brush or eraser.</small></span>
+              <input class="mr-tol" type="range" min="8" max="60" value="26" />
+            </label>
+            <label class="mr-spread mr-size" hidden>
+              <span>Brush size</span>
+              <input type="range" min="5" max="60" value="18" />
+            </label>
+
+            <div class="mr-actions">
+              <button class="btn btn--line-ink btn--sm mr-undo" disabled>Undo</button>
+              <button class="btn btn--line-ink btn--sm mr-before" disabled>Hold to see before</button>
+              <button class="btn btn--line-ink btn--sm mr-reset" disabled>Clear paint</button>
+              <button class="btn btn--line-ink btn--sm mr-save" disabled>Save picture</button>
+            </div>
+
+            <a class="btn btn--ink mr-cta" href="contact.html?type=Interior">Send this colour to Sam &rarr;</a>
+          </div>
+
+          <div class="mr-stage reveal">
+            <canvas class="mr-canvas" hidden aria-label="Your room photo. Tap a wall to paint it."></canvas>
+            <label class="mr-empty">
+              <input class="mr-file" type="file" accept="image/*" />
+              <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 14h7l3-5h12l3 5h7a3 3 0 0 1 3 3v20a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V17a3 3 0 0 1 3-3zm16 6a8 8 0 1 0 0 16 8 8 0 0 0 0-16z"/></svg>
+              <b>Add a photo of your room</b>
+              <span>Straight on, in daylight, works best.</span>
+            </label>
+            <p class="lab-note mr-note" hidden>Tap a wall to paint it. Colours on screen are approximate.</p>
+          </div>
+        </div>
+      </div>
+    </section>
     <!-- ============ CTA ============ -->
     <section class="cta-band" aria-label="Get a free estimate">
       <div class="wrap cta-inner">

@@ -165,7 +165,7 @@ lab_teaser = '''    <!-- ============ COLOUR LAB TEASER ============ -->
 quote = P['quote']
 process = P['process']
 
-home_body = hero + P['marquee'] + services + process + teaser + quote + lab_teaser + cta_band()
+home_body = hero + services + process + teaser + quote + lab_teaser + cta_band()
 results = [page('index.html', 'Happy Painting by Sam | Windsor &amp; Essex County Painters',
                 'Interior, exterior and commercial painting in Windsor and Essex County, Ontario. Sam runs every job personally: free estimates, sharp lines and a full clean-up. Call or text 519-991-7783.',
                 'index.html', home_body, home=True)]
@@ -250,11 +250,11 @@ lab = must_replace(lab, '<a class="btn btn--ink lab-cta reveal" href="#estimate"
 lab = must_replace(lab, 'Tap a swatch and watch the room get rolled. Your real pick happens with real paint chips, in your own light, at your free estimate.',
                    'Tap a swatch (or the room itself) and watch the wall get rolled. Your real pick happens with real paint chips, in your own light, at your free estimate.')
 results.append(page('colour-lab.html', 'Colour Lab | Happy Painting by Sam, Windsor',
-                    'Try wall colours on a living room before you paint. A Colour Lab from Happy Painting by Sam, painters in Windsor and Essex County.',
+                    'Try wall colours on a living room, or on a photo of your own room, before you paint. A Colour Lab from Happy Painting by Sam, painters in Windsor and Essex County.',
                     'colour-lab.html',
                     page_header('Colour Lab', 'Take a colour <em>for a spin.</em>',
-                                'Nine colours, one living room and a roller. Find the vibe you like, then bring it to your free estimate.')
-                    + lab + cta_band('Found one you love?', 'Send it to Sam with your free estimate request and he\'ll talk you through finishes and real paint chips.')))
+                                'Nine colours, one living room and a roller. Then try them on a photo of your own room and bring your favourite to your free estimate.')
+                    + lab + P['myroom'] + cta_band('Found one you love?', 'Send it to Sam with your free estimate request and he\'ll talk you through finishes and real paint chips.')))
 
 # ================================================================ ABOUT
 about_intro = '''    <!-- ============ ABOUT INTRO ============ -->

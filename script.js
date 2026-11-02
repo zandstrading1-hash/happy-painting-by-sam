@@ -316,17 +316,6 @@
   fitBadge();
 
   /* ---------------------------------------------------------
-     Marquee (home)
-     --------------------------------------------------------- */
-  const mqs = $$('.mq').map(el => {
-    const tr = $('.mq-track', el);
-    tr.innerHTML = tr.innerHTML.repeat(3);
-    return { tr, speed: parseFloat(el.dataset.speed) || 1, x: 0, w: 0 };
-  });
-  const measureMq = () => mqs.forEach(m => { m.w = m.tr.scrollWidth / 3; });
-  measureMq();
-
-  /* ---------------------------------------------------------
      Service panels (home)
      --------------------------------------------------------- */
   const panels = $$('.svc');
@@ -358,10 +347,11 @@
     const wallNew = $('#wallNew', room);
     const rcs = $$('.rc', room);
     const rollerG = $('#labRoller', room);
-    const sws = $$('.sw');
-    const stage = $('.lab-stage');
-    const cta = $('.lab-cta');
-    const nameEl = $('.lab-name'), hexEl = $('.lab-hex'), chip = $('.lab-chip'), status = $('.lab-status');
+    const lab = room.closest('.lab');
+    const sws = $$('.sw', lab);
+    const stage = $('.lab-stage', lab);
+    const cta = $('.lab-cta', lab);
+    const nameEl = $('.lab-name', lab), hexEl = $('.lab-hex', lab), chip = $('.lab-chip', lab), status = $('.lab-status', lab);
     const COLS = 6, WH = 470, CW = 167;
     let busy = false, queued = null, touched = false;
 
@@ -420,8 +410,8 @@
       const i = sws.findIndex(x => x.getAttribute('aria-checked') === 'true');
       select(sws[(i + 1) % sws.length]);
     });
-    $$('.tt').forEach(b => b.addEventListener('click', () => {
-      $$('.tt').forEach(x => { x.classList.toggle('is-on', x === b); x.setAttribute('aria-pressed', String(x === b)); });
+    $$('.tt', lab).forEach(b => b.addEventListener('click', () => {
+      $$('.tt', lab).forEach(x => { x.classList.toggle('is-on', x === b); x.setAttribute('aria-pressed', String(x === b)); });
       room.style.setProperty('--trim', b.dataset.trim);
     }));
 
@@ -431,6 +421,363 @@
       obs.disconnect();
       setTimeout(() => { if (!touched) select(sws[0], false); }, 700);
     }, { threshold: 0.45 }).observe(stage);
+  })();
+
+  /* ---------------------------------------------------------
+     Paint your own room (colour lab page)
+     Fills the tapped wall and repaints it, keeping the photo's
+     light and shadow. Brush and eraser for touch-ups. All in
+     the browser: the photo is never uploaded.
+     --------------------------------------------------------- */
+  (() => {
+    const sec = $('.myroom');
+    if (!sec) return;
+    const cv = $('.mr-canvas', sec), ctx = cv.getContext('2d', { willReadFrequently: true });
+    const empty = $('.mr-empty', sec), note = $('.mr-note', sec);
+    const sws = $$('.sw', sec);
+    const custom = $('.mr-custom', sec), customIn = $('input', custom);
+    const nameEl = $('.mr-name', sec), hexEl = $('.mr-hex', sec), status = $('.mr-status', sec);
+    const modeBs = $$('.mr-modes .tt', sec);
+    const spread = $('.mr-spread', sec), tolIn = $('.mr-tol', sec);
+    const sizeWrap = $('.mr-size', sec), sizeIn = $('input', sizeWrap);
+    const undoB = $('.mr-undo', sec), beforeB = $('.mr-before', sec), resetB = $('.mr-reset', sec), saveB = $('.mr-save', sec);
+    const cta = $('.mr-cta', sec), uploadTxt = $('.mr-upload-txt', sec);
+    const MAX = 1400;
+
+    let W = 0, H = 0, orig = null, out = null;
+    let Y, sY, sCb, sCr, G;        // luma, blurred luma/chroma for matching, edge strength
+    let layer = null;              // per pixel: index into layers, -1 = unpainted
+    let layers = [];               // { hex, meanY }
+    let history = [];              // { idx, prev, added }
+    let selected = -1, last = null, mode = 'fill', stroke = null, frame = 0;
+    let cur = { name: 'Happy Teal', hex: '#1fa3ad' };
+
+    const setStatus = (t, cls) => { status.textContent = t; status.className = `lab-status mr-status ${cls || ''}`; };
+    const rgbOf = hex => [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16));
+
+    function showColour() {
+      nameEl.textContent = cur.name;
+      hexEl.textContent = cur.hex.toUpperCase();
+      custom.style.setProperty('--c', cur.hex);
+      const pick = sws.some(s => s.dataset.name === cur.name) ? cur.name : `${cur.name} ${cur.hex.toUpperCase()}`;
+      cta.href = `contact.html?type=Interior&colour=${encodeURIComponent(pick)}`;
+    }
+
+    function setColour(name, hex) {
+      cur = { name, hex };
+      showColour();
+      if (selected >= 0 && mode === 'fill') { layers[selected].hex = hex; render(); setStatus('Repainted ✓', 'is-done'); }
+    }
+
+    function blur(src, rad = 1) {
+      const a = new Float32Array(src.length), b = new Float32Array(src.length), k = 2 * rad + 1;
+      for (let y = 0; y < H; y++) {
+        const r = y * W;
+        for (let x = 0; x < W; x++) {
+          let s = 0;
+          for (let o = -rad; o <= rad; o++) s += src[r + clamp(x + o, 0, W - 1)];
+          a[r + x] = s / k;
+        }
+      }
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+        let s = 0;
+        for (let o = -rad; o <= rad; o++) s += a[clamp(y + o, 0, H - 1) * W + x];
+        b[y * W + x] = s / k;
+      }
+      return b;
+    }
+
+    function load(file) {
+      if (!file || !/^image\//.test(file.type)) { setStatus('Use a photo', 'is-busy'); return; }
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const s = Math.min(1, MAX / Math.max(img.naturalWidth, img.naturalHeight));
+        W = cv.width = Math.round(img.naturalWidth * s);
+        H = cv.height = Math.round(img.naturalHeight * s);
+        ctx.drawImage(img, 0, 0, W, H);
+        URL.revokeObjectURL(url);
+        orig = ctx.getImageData(0, 0, W, H);
+        out = new ImageData(new Uint8ClampedArray(orig.data), W, H);
+        const n = W * H, d = orig.data;
+        Y = new Float32Array(n); const Cb = new Float32Array(n), Cr = new Float32Array(n);
+        for (let i = 0; i < n; i++) {
+          const r = d[i * 4], g = d[i * 4 + 1], b = d[i * 4 + 2];
+          Y[i] = 0.299 * r + 0.587 * g + 0.114 * b;
+          Cb[i] = 0.564 * (b - Y[i]);
+          Cr[i] = 0.713 * (r - Y[i]);
+        }
+        sY = blur(Y); sCb = blur(Cb); sCr = blur(Cr);
+        // edge strength measured over +-2px on a smoother copy: lighting changes slowly and
+        // JPEG noise averages out, while corners and trim still change within a few pixels
+        const gY = blur(blur(Y, 2), 2), gCb = blur(blur(Cb, 2), 2), gCr = blur(blur(Cr, 2), 2);
+        G = new Float32Array(n).fill(255);
+        for (let y = 2; y < H - 2; y++) for (let x = 2; x < W - 2; x++) {
+          const i = y * W + x, a = i - 2, b = i + 2, u = i - 2 * W, d = i + 2 * W;
+          G[i] = Math.abs(gY[b] - gY[a]) + Math.abs(gY[d] - gY[u]) + 1.5 * (Math.abs(gCb[b] - gCb[a]) + Math.abs(gCb[d] - gCb[u]) + Math.abs(gCr[b] - gCr[a]) + Math.abs(gCr[d] - gCr[u]));
+        }
+        layer = new Int16Array(n).fill(-1);
+        layers = []; history = []; selected = -1; last = null;
+        cv.hidden = false; empty.hidden = true; note.hidden = false;
+        uploadTxt.textContent = 'Use a different photo';
+        [beforeB, saveB].forEach(b => { b.disabled = false; });
+        syncButtons();
+        setStatus(mode === 'fill' ? 'Tap a wall' : 'Paint with your finger');
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); setStatus('Can’t read that photo', 'is-busy'); };
+      img.src = url;
+    }
+
+    // grow a region from (x, y), stopping at sharp edges. Shading across one wall can vary as much
+    // as two walls differ from each other, so the seed colour is only a loose limit.
+    function region(x, y, tol) {
+      const n = W * H, seed = y * W + x;
+      let mY = 0, mCb = 0, mCr = 0, k = 0;
+      for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) {
+        const j = clamp(y + dy, 0, H - 1) * W + clamp(x + dx, 0, W - 1);
+        mY += sY[j]; mCb += sCb[j]; mCr += sCr[j]; k++;
+      }
+      mY /= k; mCb /= k; mCr /= k;
+      const edge = 2 + tol * 0.2, lum = 0.9 + tol / 40, c2 = (tol * 0.6) ** 2, lmY = Math.log(mY + 4);
+      const inR = new Uint8Array(n), q = new Int32Array(n);
+      let head = 0, tail = 0;
+      inR[seed] = 1; q[tail++] = seed;
+      while (head < tail) {
+        const c = q[head++], cx = c % W;
+        const nb = [cx > 0 ? c - 1 : -1, cx < W - 1 ? c + 1 : -1, c >= W ? c - W : -1, c < n - W ? c + W : -1];
+        for (const j of nb) {
+          if (j < 0 || inR[j]) continue;
+          if (G[j] > edge) continue;
+          const b = sCb[j] - mCb, r = sCr[j] - mCr;
+          if (b * b + r * r > c2 || Math.abs(Math.log(sY[j] + 4) - lmY) > lum) continue;
+          inR[j] = 1; q[tail++] = j;
+        }
+      }
+      // edges are measured over a few pixels, so the fill stops short of trim and corners.
+      // creep up to 3px further into pixels that still match the wall colour.
+      for (let pass = 0; pass < 3; pass++) {
+        const grow = [];
+        for (let k = 0; k < tail; k++) {
+          const c = q[k], cx = c % W;
+          const nb = [cx > 0 ? c - 1 : -1, cx < W - 1 ? c + 1 : -1, c >= W ? c - W : -1, c < n - W ? c + W : -1];
+          for (const j of nb) {
+            if (j < 0 || inR[j]) continue;
+            const b = sCb[j] - sCb[c], r = sCr[j] - sCr[c];
+            if (b * b + r * r > c2 / 4 || Math.abs(Math.log(sY[j] + 4) - Math.log(sY[c] + 4)) > 0.18) continue;
+            inR[j] = 2; grow.push(j);
+          }
+        }
+        grow.forEach(j => { q[tail++] = j; });
+      }
+      // fill pinholes left by texture and noise
+      const add = [];
+      for (let yy = 1; yy < H - 1; yy++) for (let xx = 1; xx < W - 1; xx++) {
+        const i = yy * W + xx;
+        if (inR[i]) continue;
+        const s = inR[i - 1] + inR[i + 1] + inR[i - W] + inR[i + W] + inR[i - W - 1] + inR[i - W + 1] + inR[i + W - 1] + inR[i + W + 1];
+        if (s >= 5) add.push(i);
+      }
+      add.forEach(i => { inR[i] = 1; });
+      const idx = new Uint32Array(tail + add.length);
+      idx.set(q.subarray(0, tail)); idx.set(add, tail);
+      return idx;
+    }
+
+    // a new coat. Patches in a colour already on the walls share its light reference, so a
+    // shadowed corner filled with a second tap matches the rest of the wall.
+    function newLayer(hex, idx) {
+      const same = layers.find(l => l.hex === hex);
+      let meanY = same && same.meanY;
+      if (!meanY) {
+        let s = 0;
+        for (const i of idx) s += Y[i];
+        meanY = s / idx.length || 1;
+      }
+      layers.push({ hex, meanY });
+      return layers.length - 1;
+    }
+
+    function paint(x, y, li) {
+      const idx = region(x, y, +tolIn.value);
+      let added = false;
+      if (li == null) { li = newLayer(cur.hex, idx); added = true; }
+      const prev = new Int16Array(idx.length);
+      idx.forEach((i, k) => { prev[k] = layer[i]; layer[i] = li; });
+      history.push({ idx, prev, added });
+      selected = li;
+      last = { x, y, li, added };
+      render();
+      syncButtons();
+      const small = idx.length < W * H * 0.004;
+      setStatus(small ? 'Small spot: try more spread' : 'Painted ✓', small ? 'is-busy' : 'is-done');
+    }
+
+    function undo() {
+      const h = history.pop();
+      if (!h) return;
+      for (let k = h.idx.length - 1; k >= 0; k--) layer[h.idx[k]] = h.prev[k];
+      if (h.added) layers.pop();
+      selected = Math.min(selected, layers.length - 1);
+      last = null;
+      render();
+      syncButtons();
+      setStatus(history.length ? 'Undone' : 'Tap a wall');
+    }
+
+    function render() {
+      const o = orig.data, d = out.data;
+      const rgbs = layers.map(l => rgbOf(l.hex));
+      d.set(o);
+      for (let i = 0, n = W * H; i < n; i++) {
+        const li = layer[i];
+        if (li < 0) continue;
+        const L = layers[li], rgb = rgbs[li];
+        let f = Math.pow(Y[i] / L.meanY, 0.8);
+        f = f < 0.3 ? 0.3 : f > 1.6 ? 1.6 : f;
+        const x = i % W;
+        const edge = (x > 0 && layer[i - 1] !== li) || (x < W - 1 && layer[i + 1] !== li) || (i >= W && layer[i - W] !== li) || (i < n - W && layer[i + W] !== li);
+        const p = i * 4;
+        for (let c = 0; c < 3; c++) {
+          let v = rgb[c] * f;
+          if (f > 1) v += (255 - v) * (f - 1) * 0.35;
+          d[p + c] = edge ? (v + o[p + c]) / 2 : v;
+        }
+      }
+      ctx.putImageData(out, 0, 0);
+    }
+
+    function syncButtons() {
+      undoB.disabled = !history.length;
+      resetB.disabled = !history.length;
+    }
+
+    const toPx = e => {
+      const r = cv.getBoundingClientRect();
+      return [clamp(Math.floor((e.clientX - r.left) * W / r.width), 0, W - 1), clamp(Math.floor((e.clientY - r.top) * H / r.height), 0, H - 1)];
+    };
+
+    $$('.mr-file', sec).forEach(f => f.addEventListener('change', () => { load(f.files[0]); f.value = ''; }));
+
+    cv.addEventListener('click', e => {
+      if (!orig || mode !== 'fill') return;
+      const [x, y] = toPx(e);
+      const hit = layer[y * W + x];
+      if (hit >= 0) {
+        selected = hit;
+        layers[hit].hex = cur.hex;
+        render();
+        setStatus('Repainted ✓', 'is-done');
+        return;
+      }
+      paint(x, y);
+    });
+
+    // brush + eraser: one undo step per stroke
+    function stamp(x, y) {
+      const r = Math.max(2, Math.round(Math.max(W, H) * sizeIn.value / 1000));
+      if (stroke.li == null) {
+        const idx = [];
+        for (let yy = Math.max(0, y - r * 3); yy <= Math.min(H - 1, y + r * 3); yy++)
+          for (let xx = Math.max(0, x - r * 3); xx <= Math.min(W - 1, x + r * 3); xx++) idx.push(yy * W + xx);
+        stroke.li = newLayer(cur.hex, idx);
+        stroke.added = true;
+      }
+      for (let yy = Math.max(0, y - r); yy <= Math.min(H - 1, y + r); yy++)
+        for (let xx = Math.max(0, x - r); xx <= Math.min(W - 1, x + r); xx++) {
+          if ((xx - x) ** 2 + (yy - y) ** 2 > r * r) continue;
+          const i = yy * W + xx;
+          if (stroke.seen[i]) continue;
+          stroke.seen[i] = 1;
+          stroke.idx.push(i); stroke.prev.push(layer[i]);
+          layer[i] = stroke.li;
+        }
+      return r;
+    }
+    function strokeTo(e) {
+      const [x, y] = toPx(e);
+      const [px, py] = stroke.at || [x, y];
+      const r = Math.max(2, Math.round(Math.max(W, H) * sizeIn.value / 1000));
+      const steps = Math.max(1, Math.ceil(Math.hypot(x - px, y - py) / (r / 3)));
+      for (let s = 1; s <= steps; s++) stamp(Math.round(px + (x - px) * s / steps), Math.round(py + (y - py) * s / steps));
+      stroke.at = [x, y];
+      if (!frame) frame = requestAnimationFrame(() => { frame = 0; render(); });
+    }
+    cv.addEventListener('pointerdown', e => {
+      if (!orig || mode === 'fill') return;
+      e.preventDefault();
+      cv.setPointerCapture(e.pointerId);
+      const li = mode === 'erase' ? -1 : layers.findIndex(l => l.hex === cur.hex);
+      stroke = { li: li === -1 && mode === 'brush' ? null : li, added: false, seen: new Uint8Array(W * H), idx: [], prev: [], at: null };
+      strokeTo(e);
+    });
+    cv.addEventListener('pointermove', e => { if (stroke) strokeTo(e); });
+    const endStroke = () => {
+      if (!stroke) return;
+      if (stroke.idx.length) {
+        history.push({ idx: Uint32Array.from(stroke.idx), prev: Int16Array.from(stroke.prev), added: stroke.added });
+        if (mode === 'brush') selected = stroke.li;
+        last = null;
+        setStatus(mode === 'erase' ? 'Erased ✓' : 'Painted ✓', 'is-done');
+      }
+      stroke = null;
+      render();
+      syncButtons();
+    };
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(ev => cv.addEventListener(ev, endStroke));
+
+    modeBs.forEach(b => b.addEventListener('click', () => {
+      mode = b.dataset.mode;
+      modeBs.forEach(x => { x.classList.toggle('is-on', x === b); x.setAttribute('aria-pressed', String(x === b)); });
+      spread.hidden = mode !== 'fill';
+      sizeWrap.hidden = mode === 'fill';
+      cv.classList.toggle('is-brush', mode !== 'fill');
+      if (orig) setStatus(mode === 'fill' ? 'Tap a wall' : mode === 'brush' ? 'Paint with your finger' : 'Rub out mistakes');
+    }));
+
+    // spread slider redoes the most recent fill from the same spot
+    tolIn.addEventListener('change', () => {
+      if (!last || !history.length) return;
+      const { x, y, li, added } = last;
+      const hex = layers[li].hex;
+      undo();
+      if (added) { paint(x, y); layers[layers.length - 1].hex = hex; render(); }
+      else paint(x, y, li);
+    });
+
+    sws.forEach(s => s.addEventListener('click', () => {
+      sws.forEach(x => x.setAttribute('aria-checked', String(x === s)));
+      const hex = getComputedStyle(s).getPropertyValue('--c').trim();
+      customIn.value = hex;
+      setColour(s.dataset.name, hex);
+    }));
+    customIn.addEventListener('input', () => {
+      sws.forEach(x => x.setAttribute('aria-checked', 'false'));
+      setColour('Your colour', customIn.value);
+    });
+
+    undoB.addEventListener('click', undo);
+    resetB.addEventListener('click', () => {
+      layer.fill(-1); layers = []; history = []; selected = -1; last = null;
+      render(); syncButtons(); setStatus('Tap a wall');
+    });
+    const showBefore = on => { if (orig) ctx.putImageData(on ? orig : out, 0, 0); };
+    beforeB.addEventListener('pointerdown', () => showBefore(true));
+    ['pointerup', 'pointerleave', 'pointercancel', 'blur'].forEach(ev => beforeB.addEventListener(ev, () => showBefore(false)));
+    beforeB.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); showBefore(true); } });
+    beforeB.addEventListener('keyup', () => showBefore(false));
+    beforeB.addEventListener('contextmenu', e => e.preventDefault());
+
+    saveB.addEventListener('click', () => {
+      cv.toBlob(b => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(b);
+        a.download = `my-room-${cur.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.jpg`;
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      }, 'image/jpeg', 0.9);
+    });
+
+    showColour();
   })();
 
   /* ---------------------------------------------------------
@@ -582,13 +929,11 @@
   /* ---------------------------------------------------------
      Main loop
      --------------------------------------------------------- */
-  let sy = scrollY, lastT = performance.now(), lastHeaderY = sy;
+  let sy = scrollY, lastHeaderY = sy;
   const firstSection = $('main > section');
 
-  function loop(now) {
+  function loop() {
     requestAnimationFrame(loop);
-    const dt = Math.min(0.05, (now - lastT) / 1000 || 0.016);
-    lastT = now;
     sy = scrollY;
 
     // header + action bar
@@ -598,15 +943,6 @@
       lastHeaderY = sy;
     }
     body.classList.toggle('show-bar', sy > (firstSection ? firstSection.offsetHeight * 0.6 : 200));
-
-    // marquee
-    if (!reduce) {
-      mqs.forEach(m => {
-        m.x -= m.speed * 40 * dt;
-        if (m.w && m.x <= -m.w) m.x += m.w;
-        m.tr.style.transform = `translate3d(${m.x.toFixed(2)}px,0,0)`;
-      });
-    }
 
     // process line
     if (proc) {
@@ -638,12 +974,11 @@
     rzT = setTimeout(() => {
       const wChanged = innerWidth !== vw;
       vw = innerWidth; vh = innerHeight;
-      measureMq();
       measurePanels();
       heroPaint && heroPaint.resize();
       if (wChanged) buildDrips(footDrips, { seed: 7, base: 12, count: 16, minW: 12, maxW: 30, minL: 24, maxL: 112 });
       procPaths.forEach(o => { o.len = o.p.getTotalLength(); o.p.style.strokeDasharray = `${o.len}`; });
     }, 150);
   });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { measureMq(); measurePanels(); fitBadge(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { measurePanels(); fitBadge(); });
 })();
