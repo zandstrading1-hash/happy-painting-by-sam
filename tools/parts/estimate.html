@@ -1,0 +1,74 @@
+    <!-- ============ ESTIMATE ============ -->
+    <section class="estimate" id="estimate" aria-labelledby="est-title">
+      <div class="wrap est-grid">
+        <div class="est-copy">
+          <p class="eyebrow reveal">Free estimate</p>
+          <h2 id="est-title" class="reveal split">Let's get your walls happy.</h2>
+          <p class="reveal">Tell us a little about the job and your email app will open with everything filled in. Or skip the form and reach Sam directly.</p>
+          <div class="direct">
+            <a class="direct-card reveal" href="tel:+15199917783">
+              <span class="dc-ico dc-ico--orange"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1z"/></svg></span>
+              <span><small>Call</small><b>519-991-7783</b></span>
+            </a>
+            <a class="direct-card reveal" href="sms:+15199917783">
+              <span class="dc-ico dc-ico--teal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2z"/></svg></span>
+              <span><small>Text</small><b>519-991-7783</b></span>
+            </a>
+            <a class="direct-card reveal" href="mailto:happypaintingbysam@gmail.com">
+              <span class="dc-ico dc-ico--ink"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 6l9 7 9-7" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
+              <span><small>Email</small><b>happypaintingbysam@gmail.com</b></span>
+            </a>
+          </div>
+        </div>
+
+        <form class="est-form reveal" novalidate>
+          <fieldset>
+            <legend>What's getting painted?</legend>
+            <div class="chips">
+              <label><input type="checkbox" name="type" value="Interior" /><span>Interior</span></label>
+              <label><input type="checkbox" name="type" value="Exterior" /><span>Exterior</span></label>
+              <label><input type="checkbox" name="type" value="Cabinets" /><span>Cabinets</span></label>
+              <label><input type="checkbox" name="type" value="Commercial" /><span>Commercial</span></label>
+              <label><input type="checkbox" name="type" value="Not sure yet" /><span>Not sure yet</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>How big is the job?</legend>
+            <div class="chips">
+              <label><input type="radio" name="size" value="One room" /><span>One room</span></label>
+              <label><input type="radio" name="size" value="2 to 4 rooms" /><span>2&ndash;4 rooms</span></label>
+              <label><input type="radio" name="size" value="Whole home" /><span>Whole home</span></label>
+              <label><input type="radio" name="size" value="Outside / other" /><span>Outside / other</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>When?</legend>
+            <div class="chips">
+              <label><input type="radio" name="when" value="As soon as possible" /><span>ASAP</span></label>
+              <label><input type="radio" name="when" value="Within a month" /><span>Within a month</span></label>
+              <label><input type="radio" name="when" value="Just planning" /><span>Just planning</span></label>
+            </div>
+          </fieldset>
+          <div class="fields">
+            <label class="field"><input name="name" autocomplete="name" placeholder=" " required /><span>Your name</span></label>
+            <label class="field"><input name="phone" type="tel" autocomplete="tel" placeholder=" " /><span>Phone</span></label>
+            <label class="field"><input name="email" type="email" autocomplete="email" placeholder=" " /><span>Email</span></label>
+            <label class="field field--select">
+              <select name="town"><option value="">Town</option><option>Windsor</option><option>Tecumseh</option><option>LaSalle</option><option>Lakeshore</option><option>Essex</option><option>Amherstburg</option><option>Belle River</option><option>Kingsville</option><option>Somewhere else</option></select>
+            </label>
+            <label class="field field--wide"><textarea name="details" rows="4" placeholder=" "></textarea><span>Anything else? Rooms, colours, timing&hellip;</span></label>
+          </div>
+          <p class="form-err" role="alert" hidden>Add your name plus a phone number or email so Sam can reach you.</p>
+          <button class="btn btn--orange btn--lg btn--block" type="submit">Send my estimate request <span class="arr">&rarr;</span></button>
+          <p class="form-fine">No spam, no obligation. Sam replies by phone, text or email, whichever you prefer.</p>
+
+          <div class="form-done" hidden>
+            <svg viewBox="0 0 120 120" aria-hidden="true"><path class="fd-blob" d="M62 8c26 2 46 22 50 46s-10 48-34 56-50 2-62-20S6 38 22 22 38 6 62 8z" /><path class="fd-check" d="M38 62l16 16 30-34" /></svg>
+            <h3>Almost done!</h3>
+            <p>Your email app should be open with everything filled in. Just hit send. Want a faster answer? Call or text <a href="tel:+15199917783">519-991-7783</a>.</p>
+            <button type="button" class="btn btn--line-ink btn--sm form-again">Edit my request</button>
+          </div>
+        </form>
+      </div>
+    </section>
+

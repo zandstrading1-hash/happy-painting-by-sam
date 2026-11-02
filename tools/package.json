@@ -1,0 +1,13 @@
+{
+  "name": "happy-painting-by-sam-tools",
+  "private": true,
+  "description": "Build and smoke-test scripts for the Happy Painting by Sam concept site",
+  "scripts": {
+    "build": "python3 build_site.py",
+    "check": "node check_pages.js",
+    "check:shots": "node check_pages.js --shots"
+  },
+  "devDependencies": {
+    "playwright": "^1.48.0"
+  }
+}

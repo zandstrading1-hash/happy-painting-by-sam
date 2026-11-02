@@ -1,0 +1,49 @@
+    <!-- ============ SERVICE AREA ============ -->
+    <section class="area" id="area" aria-labelledby="area-title">
+      <div class="wrap area-grid">
+        <div class="area-copy">
+          <p class="eyebrow eyebrow--light reveal">Service area</p>
+          <h2 id="area-title" class="reveal split">Proudly painting Windsor &amp; Essex County.</h2>
+          <p class="reveal">From downtown Windsor out to Kingsville and Lakeshore. Not on the list? Ask anyway.</p>
+          <ul class="towns reveal">
+            <li data-town="Windsor">Windsor</li><li data-town="Tecumseh">Tecumseh</li><li data-town="LaSalle">LaSalle</li><li data-town="Lakeshore">Lakeshore</li>
+            <li data-town="Essex">Essex</li><li data-town="Amherstburg">Amherstburg</li><li data-town="Belle River">Belle River</li><li data-town="Kingsville">Kingsville</li>
+          </ul>
+        </div>
+        <div class="map-wrap reveal">
+          <svg class="map" viewBox="0 0 900 700" role="img" aria-label="Map of Windsor and Essex County showing the eight communities served">
+            <defs>
+              <linearGradient id="landFade" x1="0" x2="1" y1="0" y2="0">
+                <stop offset=".7" stop-color="#1a1d22" />
+                <stop offset="1" stop-color="#1a1d22" stop-opacity="0" />
+              </linearGradient>
+              <pattern id="waves" width="24" height="12" patternUnits="userSpaceOnUse"><path d="M0 6c6-6 12 6 18 0s6-6 6 0" fill="none" stroke="#1fa3ad" stroke-opacity=".12" stroke-width="1.5" /></pattern>
+            </defs>
+            <rect width="900" height="700" fill="url(#waves)" />
+            <path class="us" d="M0 0H350L320 67 260 88 190 108 140 135 115 190 105 290 95 400 85 470 60 520 0 540Z" />
+            <path class="land" d="M320 101L270 113 220 131 175 155 150 209 140 296 135 391 130 478 115 512 190 550 320 586 430 566 510 532 630 519 695 586 740 680 775 599 820 512 890 471 890 121 780 132 650 148 540 163 450 148 360 127Z" fill="url(#landFade)" />
+            <path class="coast" d="M320 101L270 113 220 131 175 155 150 209 140 296 135 391 130 478 115 512 190 550 320 586 430 566 510 532 630 519 695 586 740 680 775 599 820 512 890 471M890 121L780 132 650 148 540 163 450 148 360 127 320 101" />
+            <text class="water" x="560" y="70">Lake St. Clair</text>
+            <text class="water" x="300" y="660">Lake Erie</text>
+            <text class="water water--sm" transform="translate(112 360) rotate(-86)">Detroit River</text>
+            <text class="usa" x="40" y="54">Detroit, MI</text>
+            <g class="routes">
+              <path d="M225 162Q300 140 362 160" /><path d="M225 162Q190 210 190 260" /><path d="M225 162Q150 300 158 428" />
+              <path d="M225 162Q350 220 430 330" /><path d="M225 162Q420 300 515 505" /><path d="M225 162Q400 130 545 180" /><path d="M225 162Q480 160 670 229" />
+            </g>
+            <g class="pins">
+              <g class="pin pin--hq" data-town="Windsor" transform="translate(225 162)"><circle class="ring" r="22" /><circle r="11" /><text x="18" y="-16">Windsor</text></g>
+              <g class="pin" data-town="Tecumseh" transform="translate(362 160)"><circle class="ring" r="16" /><circle r="8" /><text x="14" y="-12">Tecumseh</text></g>
+              <g class="pin" data-town="LaSalle" transform="translate(190 260)"><circle class="ring" r="16" /><circle r="8" /><text x="14" y="6">LaSalle</text></g>
+              <g class="pin" data-town="Amherstburg" transform="translate(158 428)"><circle class="ring" r="16" /><circle r="8" /><text x="14" y="6">Amherstburg</text></g>
+              <g class="pin" data-town="Essex" transform="translate(430 330)"><circle class="ring" r="16" /><circle r="8" /><text x="14" y="6">Essex</text></g>
+              <g class="pin" data-town="Kingsville" transform="translate(515 505)"><circle class="ring" r="16" /><circle r="8" /><text x="-22" y="-16">Kingsville</text></g>
+              <g class="pin" data-town="Belle River" transform="translate(545 180)"><circle class="ring" r="16" /><circle r="8" /><text x="-10" y="34">Belle River</text></g>
+              <g class="pin" data-town="Lakeshore" transform="translate(670 229)"><circle class="ring" r="16" /><circle r="8" /><text x="14" y="6">Lakeshore</text></g>
+            </g>
+          </svg>
+          <p class="map-note">Map is illustrative.</p>
+        </div>
+      </div>
+    </section>
+
