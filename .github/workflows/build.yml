@@ -1,0 +1,45 @@
+name: Build pages
+
+# Rebuilds the six HTML pages whenever their sources change (including content edits published
+# from the client dashboard) and commits the result, which GitHub Pages then deploys.
+on:
+  push:
+    branches: [main]
+    paths: ['content/**', 'tools/**', 'img/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: build-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Always build the newest main, so a queued older run can't push stale pages.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 tools/build_site.py
+      - name: Commit rebuilt pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- ./*.html; then
+            echo "Pages already match the content."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- ./*.html
+          git commit -m "Rebuild pages from content"
+          git push
+          # Pushes made with the workflow token may not start a Pages deploy on their own.
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" --silent || true

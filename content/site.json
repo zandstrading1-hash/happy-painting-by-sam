@@ -1,0 +1,620 @@
+{
+  "pages": {
+    "home": {
+      "title": "Happy Painting by Sam | Windsor & Essex County Painters",
+      "description": "Interior, exterior and commercial painting in Windsor and Essex County, Ontario. Sam runs every job personally: free estimates, sharp lines and a full clean-up. Call or text 519-991-7783."
+    },
+    "services": {
+      "title": "Painting Services | Happy Painting by Sam, Windsor",
+      "description": "Interior, exterior, kitchen cabinet and commercial painting in Windsor and Essex County. Free estimates from Sam. Call or text 519-991-7783.",
+      "heading": "Every surface, *inside and out.*",
+      "lede": "Interior, cabinet, exterior and commercial painting across Windsor and Essex County, with every job run by Sam himself."
+    },
+    "work": {
+      "title": "Our Work | Happy Painting by Sam, Windsor",
+      "description": "Recent painting projects by Happy Painting by Sam in Windsor and Essex County: kitchens, cabinets, trim, feature walls and exteriors.",
+      "heading": "Fresh off the *drop cloth.*",
+      "lede": "Real projects from around Windsor and Essex County: kitchens, cabinets, trim, feature walls and exteriors. Tap any photo to see it bigger."
+    },
+    "lab": {
+      "title": "Colour Lab | Happy Painting by Sam, Windsor",
+      "description": "Try wall colours on a living room, or on a photo of your own room, before you paint. A Colour Lab from Happy Painting by Sam, painters in Windsor and Essex County.",
+      "heading": "Take a colour *for a spin.*",
+      "lede": "Nine colours, one living room and a roller. Then try them on a photo of your own room and bring your favourite to your free estimate."
+    },
+    "about": {
+      "title": "About Sam | Happy Painting by Sam, Windsor",
+      "description": "Happy Painting by Sam is a Windsor, Ontario painting company. Sam runs every job personally, from free estimate to final coat.",
+      "heading": "Run by Sam. *Every job.*",
+      "lede": "Quality work, happy homes. Here's what that looks like on a job, and where in Essex County Sam paints."
+    },
+    "contact": {
+      "title": "Free Estimate | Happy Painting by Sam, Windsor",
+      "description": "Get a free painting estimate in Windsor and Essex County. Call or text Sam at 519-991-7783 or send the form.",
+      "heading": "Let's get your walls *happy.*",
+      "lede": "Free, no-obligation estimates across Windsor and Essex County. Use the form, or call or text Sam directly."
+    }
+  },
+  "cta": {
+    "title": "Ready for walls you're happy with?",
+    "text": "Free, no-pressure estimates across Windsor and Essex County. Sam will come out, look at the job and give you an honest quote."
+  },
+  "home": {
+    "hero": {
+      "lede": "Interior, exterior and commercial painting across Windsor and Essex County. Sam runs every job personally: an honest quote, sharp lines, protected floors and a full clean-up before he leaves.",
+      "ticks": [
+        "Free estimates",
+        "Most rooms done in a day",
+        "Full clean-up"
+      ]
+    },
+    "services": {
+      "title": "What we paint.",
+      "cards": [
+        {
+          "title": "Interior",
+          "image": {
+            "src": "img/open-plan-blue-walls.webp",
+            "alt": "Open-plan living area freshly painted in a deep blue",
+            "w": 900,
+            "h": 1200
+          },
+          "text": "Walls, ceilings, trim, doors and full-room refreshes, with lines so crisp you'll want to show them off.",
+          "items": [
+            "Living rooms & bedrooms",
+            "Kitchens & bathrooms",
+            "Trim, doors & baseboards",
+            "Basements & hallways",
+            "Accent & feature walls"
+          ],
+          "link": "services.html#interior",
+          "link_text": "More on interior painting"
+        },
+        {
+          "title": "Cabinets",
+          "image": {
+            "src": "img/kitchen-cabinet-refinish.webp",
+            "alt": "Kitchen with freshly painted white shaker cabinets",
+            "w": 1200,
+            "h": 900
+          },
+          "text": "Tired kitchen cabinets and built-ins brought back with a clean, fresh finish.",
+          "items": [
+            "Kitchen cabinet refinishing",
+            "Vanities & built-ins",
+            "Millwork & trim detail",
+            "Basement kitchenettes"
+          ],
+          "link": "services.html#cabinets",
+          "link_text": "More on cabinet painting"
+        },
+        {
+          "title": "Exterior",
+          "image": {
+            "src": "img/exterior-stucco-brick.webp",
+            "alt": "Home exterior with painted stucco and stone in winter",
+            "w": 900,
+            "h": 1200
+          },
+          "text": "Curb appeal that holds up to Essex County summers and winters.",
+          "items": [
+            "Siding & stucco",
+            "Brick painting & staining",
+            "Trim, soffits & doors",
+            "Decks, fences, porches & garages"
+          ],
+          "link": "services.html#exterior",
+          "link_text": "More on exterior painting"
+        },
+        {
+          "title": "Commercial",
+          "image": {
+            "src": "img/hallway-doors-trim.webp",
+            "alt": "Hallway with doors and trim freshly painted, floors protected",
+            "w": 900,
+            "h": 1200
+          },
+          "text": "Offices, storefronts, rentals and listings, painted on schedule so your space gets back to business.",
+          "items": [
+            "Offices & retail spaces",
+            "Property management & rentals",
+            "Real-estate refreshes",
+            "Cabinet & millwork finishes"
+          ],
+          "link": "services.html#commercial",
+          "link_text": "More on commercial painting"
+        }
+      ]
+    },
+    "process": {
+      "title": "Three steps to a happier home.",
+      "steps": [
+        {
+          "title": "Reach out",
+          "text": "Call, text or email. Tell Sam what you're thinking, whether it's one room or the whole house."
+        },
+        {
+          "title": "Free, honest quote",
+          "text": "Sam comes out, looks at the job in person and gives you a straight quote, with no pressure."
+        },
+        {
+          "title": "Prep, paint, clean up",
+          "text": "Floors and furniture covered, edges taped, every coat done right. Then a full clean-up before he leaves."
+        }
+      ]
+    },
+    "quote": {
+      "text": "Precision, cleanliness, and fast completion.",
+      "who": "From a Happy Painting customer"
+    },
+    "teaser": {
+      "title": "Fresh off the drop cloth.",
+      "items": [
+        {
+          "image": {
+            "src": "img/open-plan-blue-walls.webp",
+            "alt": "Open-plan blue walls",
+            "w": 900,
+            "h": 1200
+          },
+          "caption": "Open-plan blue walls"
+        },
+        {
+          "image": {
+            "src": "img/kitchen-cabinet-refinish.webp",
+            "alt": "Kitchen cabinet refinish",
+            "w": 1200,
+            "h": 900
+          },
+          "caption": "Kitchen cabinet refinish"
+        },
+        {
+          "image": {
+            "src": "img/exterior-stucco-brick.webp",
+            "alt": "Exterior stucco & brick",
+            "w": 900,
+            "h": 1200
+          },
+          "caption": "Exterior stucco & brick"
+        },
+        {
+          "image": {
+            "src": "img/entry-hall-stairs.webp",
+            "alt": "Entry hall & stairs",
+            "w": 1200,
+            "h": 900
+          },
+          "caption": "Entry hall & stairs"
+        },
+        {
+          "image": {
+            "src": "img/bedroom-accent-wall.webp",
+            "alt": "Bedroom accent wall",
+            "w": 1200,
+            "h": 900
+          },
+          "caption": "Bedroom accent wall"
+        },
+        {
+          "image": {
+            "src": "img/warm-white-cabinets.webp",
+            "alt": "Warm white cabinets",
+            "w": 1200,
+            "h": 900
+          },
+          "caption": "Warm white cabinets"
+        }
+      ]
+    },
+    "lab": {
+      "title": "Can't pick a colour? Take one for a spin.",
+      "text": "Tap a swatch and watch a room get rolled in it, then switch the trim between crisp white and modern black."
+    }
+  },
+  "services": [
+    {
+      "id": "interior",
+      "type": "Interior",
+      "title": "Interior painting",
+      "images": [
+        {
+          "src": "img/open-plan-blue-walls.webp",
+          "alt": "Open-plan living area freshly painted in a deep blue",
+          "w": 900,
+          "h": 1200
+        },
+        {
+          "src": "img/bedroom-closet-trim.webp",
+          "alt": "Bedroom with fresh walls, closet doors and trim",
+          "w": 1200,
+          "h": 900
+        }
+      ],
+      "lede": "Walls, ceilings, trim, doors and full-room refreshes. Whether it's one bedroom or the whole house, the prep is careful and the lines are crisp.",
+      "items": [
+        "Living rooms & bedrooms",
+        "Kitchens & bathrooms",
+        "Walls & ceilings",
+        "Trim, doors & baseboards",
+        "Basements & hallways",
+        "Accent & feature walls"
+      ],
+      "notes": [
+        "Sharp lines, guaranteed",
+        "Most rooms done in a day",
+        "Floors & furniture protected"
+      ]
+    },
+    {
+      "id": "cabinets",
+      "type": "Cabinets",
+      "title": "Kitchen cabinets",
+      "images": [
+        {
+          "src": "img/kitchen-cabinet-refinish.webp",
+          "alt": "Kitchen with freshly painted white shaker cabinets",
+          "w": 1200,
+          "h": 900
+        },
+        {
+          "src": "img/warm-white-cabinets.webp",
+          "alt": "Warm white upper cabinets and range hood",
+          "w": 1200,
+          "h": 900
+        }
+      ],
+      "lede": "Kitchen cabinets, vanities and built-ins brought back with a clean, fresh finish. A big change for the room without tearing anything out.",
+      "items": [
+        "Kitchen cabinet refinishing",
+        "Vanities & built-ins",
+        "Millwork & trim detail",
+        "Basement kitchenettes"
+      ],
+      "notes": [
+        "Free in-person quote",
+        "Full clean-up"
+      ]
+    },
+    {
+      "id": "exterior",
+      "type": "Exterior",
+      "title": "Exterior painting",
+      "images": [
+        {
+          "src": "img/exterior-stucco-brick.webp",
+          "alt": "Home exterior with painted stucco and stone",
+          "w": 900,
+          "h": 1200
+        }
+      ],
+      "lede": "Curb appeal that holds up to Essex County summers and winters, from siding and stucco to the deck out back.",
+      "items": [
+        "Siding & stucco",
+        "Brick painting & staining",
+        "Trim, soffits & doors",
+        "Decks & fences",
+        "Porches & garages"
+      ],
+      "notes": [
+        "Free in-person quote",
+        "On time, on schedule"
+      ]
+    },
+    {
+      "id": "commercial",
+      "type": "Commercial",
+      "title": "Commercial painting",
+      "images": [
+        {
+          "src": "img/hallway-doors-trim.webp",
+          "alt": "Hallway with doors and trim freshly painted, floors protected",
+          "w": 900,
+          "h": 1200
+        },
+        {
+          "src": "img/basement-side-entry.webp",
+          "alt": "Freshly painted side entry and stairwell",
+          "w": 1200,
+          "h": 900
+        }
+      ],
+      "lede": "Offices, storefronts, rentals and listings, painted on schedule so your space gets back to business.",
+      "items": [
+        "Offices & retail spaces",
+        "Property management & rental turnovers",
+        "Real-estate refreshes",
+        "Cabinet & millwork finishes"
+      ],
+      "notes": [
+        "On time, on schedule",
+        "Full clean-up"
+      ]
+    }
+  ],
+  "gallery": [
+    {
+      "image": {
+        "src": "img/open-plan-blue-walls.webp",
+        "alt": "Open-plan blue walls",
+        "w": 900,
+        "h": 1200
+      },
+      "caption": "Open-plan blue walls",
+      "tags": [
+        "interior"
+      ]
+    },
+    {
+      "image": {
+        "src": "img/kitchen-cabinet-refinish.webp",
+        "alt": "Kitchen cabinet refinish",
+        "w": 1200,
+        "h": 900
+      },
+      "caption": "Kitchen cabinet refinish",
+      "tags": [
+        "kitchen"
+      ]
+    },
+    {
+      "image": {
+        "src": "img/bedroom-accent-wall.webp",
+        "alt": "Bedroom accent wall in progress, floor protected",
+        "w": 1200,
+        "h": 900
+      },
+      "caption": "Bedroom accent wall",
+      "tags": [
+        "interior"
+      ]
+    },
+    {
+      "image": {
+        "src": "img/exterior-stucco-brick.webp",
+        "alt": "Exterior stucco and brick",
+        "w": 900,
+        "h": 1200
+      },
+      "caption": "Exterior stucco & brick",
+      "tags": [
+        "exterior"
+      ]
+    },
+    {
+      "image": {
+        "src": "img/entry-hall-stairs.webp",
+        "alt": "Entry hall and stairs",
+        "w": 1200,
+        "h": 900
+      },
+      "caption": "Entry hall & stairs",
+      "tags": [
+        "interior",
+        "trim"
+      ]
+    },
+    {
+      "image": {
+        "src": "img/full-kitchen-repaint.webp",
+        "alt": "Full kitchen repaint",
+        "w": 1200,
+        "h": 900
+      },
+      "caption": "Full kitchen repaint",
+      "tags": [
+        "kitchen"
+      ]
+    },
+    {
+      "image": {
+        "src": "img/dining-feature-wall.webp",
+        "alt": "Dining room feature wall",
+        "w": 900,
+        "h": 1200
+      },
+      "caption": "Dining room feature wall",
+      "tags": [
+        "interior"
+      ]
+    },
+    {
+      "image": {
+        "src": "img/window-trim.webp",
+        "alt": "Window trim detail",
+        "w": 1200,
+        "h": 900
+      },
+      "caption": "Window trim detail",
+      "tags": [
+        "trim",
+        "interior"
+      ]
+    },
+    {
+      "image": {
+        "src": "img/warm-white-cabinets.webp",
+        "alt": "Warm white cabinets",
+        "w": 1200,
+        "h": 900
+      },
+      "caption": "Warm white cabinets",
+      "tags": [
+        "kitchen"
+      ]
+    },
+    {
+      "image": {
+        "src": "img/hallway-doors-trim.webp",
+        "alt": "Hallway, doors and trim",
+        "w": 900,
+        "h": 1200
+      },
+      "caption": "Hallway, doors & trim",
+      "tags": [
+        "interior",
+        "trim"
+      ]
+    },
+    {
+      "image": {
+        "src": "img/bedroom-closet-trim.webp",
+        "alt": "Bedroom closet and trim",
+        "w": 1200,
+        "h": 900
+      },
+      "caption": "Bedroom closet & trim",
+      "tags": [
+        "interior",
+        "trim"
+      ]
+    },
+    {
+      "image": {
+        "src": "img/cabinet-trim-detail.webp",
+        "alt": "Cabinet and trim detail",
+        "w": 1200,
+        "h": 900
+      },
+      "caption": "Cabinet & trim detail",
+      "tags": [
+        "kitchen",
+        "trim"
+      ]
+    },
+    {
+      "image": {
+        "src": "img/stairwell-in-progress.webp",
+        "alt": "Stairwell painting in progress",
+        "w": 900,
+        "h": 1200
+      },
+      "caption": "Stairwell, mid-job",
+      "tags": [
+        "interior"
+      ]
+    },
+    {
+      "image": {
+        "src": "img/mudroom-entry.webp",
+        "alt": "Mudroom and entry",
+        "w": 1200,
+        "h": 900
+      },
+      "caption": "Mudroom & entry",
+      "tags": [
+        "interior"
+      ]
+    },
+    {
+      "image": {
+        "src": "img/basement-kitchenette.webp",
+        "alt": "Basement kitchenette",
+        "w": 1200,
+        "h": 900
+      },
+      "caption": "Basement kitchenette",
+      "tags": [
+        "kitchen",
+        "interior"
+      ]
+    },
+    {
+      "image": {
+        "src": "img/basement-side-entry.webp",
+        "alt": "Basement side entry",
+        "w": 1200,
+        "h": 900
+      },
+      "caption": "Basement side entry",
+      "tags": [
+        "interior"
+      ]
+    }
+  ],
+  "lab": {
+    "cta_title": "Found one you love?",
+    "cta_text": "Send it to Sam with your free estimate request and he'll talk you through finishes and real paint chips."
+  },
+  "about": {
+    "title": "One painter who knows your project.",
+    "images": [
+      {
+        "src": "img/stairwell-in-progress.webp",
+        "alt": "Stairwell mid-job with floors protected",
+        "w": 900,
+        "h": 1200
+      },
+      {
+        "src": "img/bedroom-accent-wall.webp",
+        "alt": "Bedroom accent wall being painted, floor covered",
+        "w": 1200,
+        "h": 900
+      }
+    ],
+    "paragraphs": [
+      "Happy Painting by Sam is a residential and commercial painting company based in Windsor, Ontario. Sam runs every job personally. He's the one who comes out to look at your space, gives you an honest quote and makes sure the final coat is right, with clear communication the whole way through.",
+      "That's the idea behind the name: the job isn't finished until you're happy with it."
+    ],
+    "ticks": [
+      "Free, honest estimates",
+      "Floors & furniture protected",
+      "Sharp lines, guaranteed",
+      "Full clean-up before he leaves"
+    ],
+    "promise": {
+      "title": "The little things are the whole thing.",
+      "tiles": [
+        {
+          "title": "Sharp lines. Guaranteed.",
+          "text": "Crisp edges where walls meet trim and ceilings. It's the detail everyone notices."
+        },
+        {
+          "title": "Most rooms in a day.",
+          "text": "Typical residential rooms are finished in a single day, so your life isn't on hold."
+        },
+        {
+          "title": "On time, on schedule.",
+          "text": "Shows up when promised and finishes when promised. Simple as that."
+        },
+        {
+          "title": "Your stuff, protected.",
+          "text": "Floors and furniture covered with drop cloths before a single can is opened."
+        },
+        {
+          "title": "Full clean-up.",
+          "text": "Tape, cloths and mess, gone. You get your room back, just better."
+        },
+        {
+          "title": "Not done till you're happy.",
+          "text": "Sam doesn't call a job finished until you do. It's in the name."
+        }
+      ]
+    }
+  },
+  "faq": [
+    {
+      "q": "Are estimates really free?",
+      "a": "Yes. Sam comes out, looks at the project in person and gives you an honest quote at no cost and with no obligation."
+    },
+    {
+      "q": "How long does a typical room take?",
+      "a": "Most residential rooms are finished in a single day. For bigger jobs, ask Sam for a timeline when he quotes."
+    },
+    {
+      "q": "Will my floors and furniture be protected?",
+      "a": "Yes. Floors and furniture are covered with drop cloths and edges are taped before painting starts, and everything is cleaned up before Sam leaves."
+    },
+    {
+      "q": "Which areas do you serve?",
+      "a": "Windsor, Tecumseh, LaSalle, Lakeshore, Essex, Amherstburg, Belle River and Kingsville. Somewhere else in the county? Ask anyway."
+    },
+    {
+      "q": "Do you paint exteriors and commercial spaces?",
+      "a": "Yes. Exteriors include siding, stucco, brick, trim, soffits, doors, decks, fences, porches and garages. Commercial work includes offices, retail, rental turnovers and real-estate refreshes."
+    },
+    {
+      "q": "What if I'm not happy with the result?",
+      "a": "Then the job isn't done. Sam doesn't consider a job finished until you're happy with it. It's in the name."
+    }
+  ]
+}

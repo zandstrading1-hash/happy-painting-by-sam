@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "images": { "dir": "img", "maxWidth": 1200, "quality": 0.82 },
+  "sections": [
+    {
+      "id": "home",
+      "title": "Home page",
+      "fields": [
+        { "path": "home.hero.lede", "label": "Intro paragraph", "type": "textarea", "max": 400 },
+        { "path": "home.hero.ticks", "label": "Highlights under the buttons", "type": "list", "min": 1, "max": 5, "of": { "type": "text", "max": 60 } },
+        { "path": "home.services.title", "label": "Services heading", "type": "text", "max": 80 },
+        {
+          "path": "home.services.cards", "label": "Service cards", "type": "list", "fixed": true, "itemLabel": "title",
+          "of": { "type": "group", "fields": [
+            { "key": "title", "label": "Name", "type": "text", "max": 40 },
+            { "key": "text", "label": "Description", "type": "textarea", "max": 300 },
+            { "key": "items", "label": "Bullet points", "type": "list", "min": 1, "max": 8, "of": { "type": "text", "max": 80 } },
+            { "key": "image", "label": "Photo", "type": "image" },
+            { "key": "link_text", "label": "Link text", "type": "text", "max": 60 }
+          ] }
+        },
+        { "path": "home.process.title", "label": "How it works heading", "type": "text", "max": 80 },
+        {
+          "path": "home.process.steps", "label": "How it works steps", "type": "list", "fixed": true, "itemLabel": "title",
+          "of": { "type": "group", "fields": [
+            { "key": "title", "label": "Step name", "type": "text", "max": 60 },
+            { "key": "text", "label": "Step text", "type": "textarea", "max": 300 }
+          ] }
+        },
+        { "path": "home.quote.text", "label": "Customer quote", "type": "textarea", "max": 200 },
+        { "path": "home.quote.who", "label": "Quote attribution", "type": "text", "max": 80 },
+        { "path": "home.teaser.title", "label": "Recent work heading", "type": "text", "max": 80 },
+        {
+          "path": "home.teaser.items", "label": "Recent work photos", "type": "list", "fixed": true, "itemLabel": "caption",
+          "of": { "type": "group", "fields": [
+            { "key": "image", "label": "Photo", "type": "image" },
+            { "key": "caption", "label": "Caption", "type": "text", "max": 60 }
+          ] }
+        },
+        { "path": "home.lab.title", "label": "Colour Lab teaser heading", "type": "text", "max": 80 },
+        { "path": "home.lab.text", "label": "Colour Lab teaser text", "type": "textarea", "max": 300 },
+        { "path": "cta.title", "label": "Call-to-action heading (bottom of most pages)", "type": "text", "max": 80 },
+        { "path": "cta.text", "label": "Call-to-action text", "type": "textarea", "max": 300 }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services page",
+      "fields": [
+        { "path": "pages.services.heading", "label": "Page heading (*stars* make words italic)", "type": "text", "max": 80 },
+        { "path": "pages.services.lede", "label": "Page intro", "type": "textarea", "max": 300 },
+        {
+          "path": "services", "label": "Services", "type": "list", "fixed": true, "itemLabel": "title",
+          "of": { "type": "group", "fields": [
+            { "key": "title", "label": "Name", "type": "text", "max": 60 },
+            { "key": "lede", "label": "Description", "type": "textarea", "max": 400 },
+            { "key": "items", "label": "What we paint", "type": "list", "min": 1, "max": 10, "of": { "type": "text", "max": 80 } },
+            { "key": "notes", "label": "Highlights", "type": "list", "min": 0, "max": 4, "of": { "type": "text", "max": 60 } },
+            { "key": "images", "label": "Photos", "type": "list", "min": 1, "max": 2, "of": { "type": "image" } }
+          ] }
+        }
+      ]
+    },
+    {
+      "id": "work",
+      "title": "Project photos",
+      "fields": [
+        { "path": "pages.work.heading", "label": "Page heading (*stars* make words italic)", "type": "text", "max": 80 },
+        { "path": "pages.work.lede", "label": "Page intro", "type": "textarea", "max": 300 },
+        {
+          "path": "gallery", "label": "Gallery", "type": "list", "min": 1, "max": 60, "itemLabel": "caption",
+          "of": { "type": "group", "fields": [
+            { "key": "image", "label": "Photo", "type": "image" },
+            { "key": "caption", "label": "Caption", "type": "text", "max": 60 },
+            { "key": "tags", "label": "Filters", "type": "tags", "options": [
+              { "value": "interior", "label": "Interior" },
+              { "value": "kitchen", "label": "Kitchens & cabinets" },
+              { "value": "trim", "label": "Trim & detail" },
+              { "value": "exterior", "label": "Exterior" }
+            ] }
+          ] }
+        }
+      ]
+    },
+    {
+      "id": "about",
+      "title": "About page",
+      "fields": [
+        { "path": "pages.about.heading", "label": "Page heading (*stars* make words italic)", "type": "text", "max": 80 },
+        { "path": "pages.about.lede", "label": "Page intro", "type": "textarea", "max": 300 },
+        { "path": "about.title", "label": "Section heading", "type": "text", "max": 80 },
+        { "path": "about.paragraphs", "label": "Paragraphs", "type": "list", "min": 1, "max": 5, "of": { "type": "textarea", "max": 800 } },
+        { "path": "about.ticks", "label": "Checklist", "type": "list", "min": 1, "max": 6, "of": { "type": "text", "max": 60 } },
+        { "path": "about.images", "label": "Photos", "type": "list", "fixed": true, "of": { "type": "image" } },
+        { "path": "about.promise.title", "label": "Promise heading", "type": "text", "max": 80 },
+        {
+          "path": "about.promise.tiles", "label": "Promise tiles", "type": "list", "fixed": true, "itemLabel": "title",
+          "of": { "type": "group", "fields": [
+            { "key": "title", "label": "Title", "type": "text", "max": 60 },
+            { "key": "text", "label": "Text", "type": "textarea", "max": 200 }
+          ] }
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "title": "Contact & FAQ",
+      "fields": [
+        { "path": "pages.contact.heading", "label": "Page heading (*stars* make words italic)", "type": "text", "max": 80 },
+        { "path": "pages.contact.lede", "label": "Page intro", "type": "textarea", "max": 300 },
+        {
+          "path": "faq", "label": "Questions", "type": "list", "min": 1, "max": 20, "itemLabel": "q",
+          "of": { "type": "group", "fields": [
+            { "key": "q", "label": "Question", "type": "text", "max": 120 },
+            { "key": "a", "label": "Answer", "type": "textarea", "max": 800 }
+          ] }
+        }
+      ]
+    },
+    {
+      "id": "lab",
+      "title": "Colour Lab page",
+      "fields": [
+        { "path": "pages.lab.heading", "label": "Page heading (*stars* make words italic)", "type": "text", "max": 80 },
+        { "path": "pages.lab.lede", "label": "Page intro", "type": "textarea", "max": 300 },
+        { "path": "lab.cta_title", "label": "Bottom heading", "type": "text", "max": 80 },
+        { "path": "lab.cta_text", "label": "Bottom text", "type": "textarea", "max": 300 }
+      ]
+    },
+    {
+      "id": "seo",
+      "title": "Search results",
+      "help": "The title and short description Google shows for each page.",
+      "fields": [
+        { "path": "pages.home.title", "label": "Home: title", "type": "text", "max": 70 },
+        { "path": "pages.home.description", "label": "Home: description", "type": "textarea", "max": 200 },
+        { "path": "pages.services.title", "label": "Services: title", "type": "text", "max": 70 },
+        { "path": "pages.services.description", "label": "Services: description", "type": "textarea", "max": 200 },
+        { "path": "pages.work.title", "label": "Our Work: title", "type": "text", "max": 70 },
+        { "path": "pages.work.description", "label": "Our Work: description", "type": "textarea", "max": 200 },
+        { "path": "pages.lab.title", "label": "Colour Lab: title", "type": "text", "max": 70 },
+        { "path": "pages.lab.description", "label": "Colour Lab: description", "type": "textarea", "max": 200 },
+        { "path": "pages.about.title", "label": "About: title", "type": "text", "max": 70 },
+        { "path": "pages.about.description", "label": "About: description", "type": "textarea", "max": 200 },
+        { "path": "pages.contact.title", "label": "Contact: title", "type": "text", "max": 70 },
+        { "path": "pages.contact.description", "label": "Contact: description", "type": "textarea", "max": 200 }
+      ]
+    }
+  ]
+}

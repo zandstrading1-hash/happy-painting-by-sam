@@ -16,6 +16,10 @@ CNAME                          <- custom domain for GitHub Pages
 _config.yml                    <- keeps tools/ and this README off the published site
 _headers                       <- only used if the site is ever moved to Cloudflare Pages
 
+content/site.json              <- page copy and photo list (edited by the client dashboard)
+content/schema.json            <- which fields of site.json the dashboard may edit
+.github/workflows/build.yml    <- rebuilds the pages when content/, img/ or tools/ change
+
 tools/
   build_site.py                <- writes the six .html pages
   parts/*.html                 <- shared fragments (head, header, footer, sections)
@@ -26,15 +30,20 @@ tools/
 ## Editing
 
 - **Styles or behaviour:** edit `style.css` or `script.js`. Nothing to rebuild.
-- **Page content, nav, footer, CTA band:** edit `tools/parts/*.html` and/or `tools/build_site.py`, then run
+- **Page copy and photos (headings, text, lists, gallery, FAQ, page titles):** these live in
+  `content/site.json` as plain text, so the client dashboard can edit them. `content/schema.json`
+  lists the fields the dashboard may change. Edit the JSON, not the HTML, and rebuild. In headings,
+  `*stars*` make words italic. Pushing a change under `content/`, `img/` or `tools/` runs
+  `.github/workflows/build.yml`, which rebuilds the pages and commits them.
+- **Markup, nav, footer:** edit `tools/parts/*.html` and/or `tools/build_site.py`, then run
 
   ```
   python3 tools/build_site.py
   ```
 
-  This overwrites the six HTML pages. If you hand-edit a page instead, the next build will undo it,
-  so pick one way and stick to it. `build_site.py` holds the page-specific copy (service details,
-  About text, FAQ, page titles and descriptions); `parts/` holds sections reused across pages.
+  This overwrites the six HTML pages. If you hand-edit a page instead, the next build will undo it.
+  `parts/` holds sections reused across pages; `{{path}}` placeholders in them are filled from
+  `content/site.json`.
 - `script.js` only runs the modules a page has (`if` the element exists), so a section can move
   between pages without JS changes.
 
