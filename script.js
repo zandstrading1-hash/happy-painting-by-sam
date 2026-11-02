@@ -899,12 +899,18 @@
   });
 
   /* ---------------------------------------------------------
-     Estimate form -> prefilled email (contact page)
+     Estimate form (contact page). Sends through Web3Forms when
+     the page has an access key, otherwise opens a prefilled email.
      --------------------------------------------------------- */
   const form = $('.est-form');
   if (form) {
-    const err = $('.form-err', form);
+    const err = $('.form-err:not(.form-fail)', form);
+    const fail = $('.form-fail', form);
     const done = $('.form-done', form);
+    const key = form.dataset.key;
+    const to = $('.direct-card[href^="mailto:"]').getAttribute('href').slice(7);
+    const btn = $('button[type="submit"]', form), btnHTML = btn.innerHTML;
+    const again = $('.form-again', form);
 
     // prefill from links like contact.html?type=Exterior&colour=Ojibway%20Sage
     const q = new URLSearchParams(location.search);
@@ -927,23 +933,55 @@
         return;
       }
       err.hidden = true;
+      fail.hidden = true;
       const types = fd.getAll('type').join(', ') || 'Not specified';
-      const lines = [
-        'Hi Sam,', '', "I'd like a free painting estimate.", '',
-        `What: ${types}`,
-        `Size: ${v('size') || 'Not specified'}`,
-        `Timing: ${v('when') || 'Not specified'}`,
-        `Town: ${v('town') || 'Not specified'}`, '',
-        `Details: ${v('details') || 'None'}`, '',
-        `Name: ${name}`,
-        `Phone: ${phone || 'Not given'}`,
-        `Email: ${email || 'Not given'}`,
-      ];
+      const info = {
+        What: types,
+        Size: v('size') || 'Not specified',
+        Timing: v('when') || 'Not specified',
+        Town: v('town') || 'Not specified',
+        Details: v('details') || 'None',
+        Name: name,
+        Phone: phone || 'Not given',
+        Email: email || 'Not given',
+      };
+      const lines = ['Hi Sam,', '', "I'd like a free painting estimate.", '',
+        ...['What', 'Size', 'Timing', 'Town'].map(k => `${k}: ${info[k]}`), '',
+        `Details: ${info.Details}`, '',
+        ...['Name', 'Phone', 'Email'].map(k => `${k}: ${info[k]}`)];
       const subject = `Free estimate request: ${types} (${name})`;
-      done.hidden = false;
-      window.location.href = `mailto:happypaintingbysam@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+      const mailto = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+
+      if (!key) {
+        done.hidden = false;
+        window.location.href = mailto;
+        return;
+      }
+      const sent = () => {
+        $('h3', done).textContent = 'Request sent!';
+        $('p', done).innerHTML = 'Thanks! Sam will be in touch soon. Need him sooner? Call or text <a href="tel:+15199917783">519-991-7783</a>.';
+        again.textContent = 'Send another request';
+        done.hidden = false;
+        form.reset();
+      };
+      if (v('website')) { sent(); return; }  // spam bots fill the hidden field
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ access_key: key, subject, from_name: 'Happy Painting website', replyto: email || undefined, ...info }),
+      })
+        .then(r => r.json())
+        .then(d => { if (!d.success) throw new Error(d.message); sent(); })
+        .catch(() => {
+          $('.fail-mail', fail).href = mailto;
+          fail.hidden = false;
+          fail.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
+        })
+        .finally(() => { btn.disabled = false; btn.innerHTML = btnHTML; });
     });
-    $('.form-again', form).addEventListener('click', () => { done.hidden = true; });
+    again.addEventListener('click', () => { done.hidden = true; });
   }
 
   /* ---------------------------------------------------------

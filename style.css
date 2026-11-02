@@ -618,6 +618,9 @@ html:not(.js) .quote-text span { color: var(--ink); }
 .field input:focus + span, .field input:not(:placeholder-shown) + span,
 .field textarea:focus + span, .field textarea:not(:placeholder-shown) + span { transform: translateY(-9px) scale(.74); color: var(--teal-deep); font-weight: 600; }
 .form-err { color: #b3261e; font-weight: 600; font-size: .92rem; margin: -4px 0 14px; }
+.form-err a { color: inherit; text-decoration: underline; }
+.est-form .btn[disabled] { opacity: .65; pointer-events: none; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-fine { font-size: .85rem; color: var(--muted); text-align: center; margin: 14px 0 0; }
 .form-done { position: absolute; inset: 0; background: #fff; display: grid; place-content: center; justify-items: center; text-align: center; padding: 30px; z-index: 3; }
 .form-done[hidden] { display: none; }

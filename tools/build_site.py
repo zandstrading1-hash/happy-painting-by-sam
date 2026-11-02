@@ -11,6 +11,10 @@ PARTS = pathlib.Path(__file__).parent / 'parts'
 OUT = pathlib.Path(__file__).resolve().parents[1]  # repo root
 P = {f.stem: f.read_text() for f in PARTS.glob('*.html')}
 
+# Web3Forms access key for the estimate form. Enter the inbox the requests should go to at
+# web3forms.com and the key is emailed there. Blank: the form opens the visitor's email app instead.
+FORM_KEY = ''
+
 PHONE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1z"/></svg>'
 
 PAGES = [  # (file, nav label)
@@ -290,7 +294,9 @@ est = P['estimate']
 est = re.sub(r'<p class="eyebrow reveal">Free estimate</p>\s*<h2 id="est-title" class="reveal split">.*?</h2>',
              '<h2 id="est-title" class="reveal split">Tell Sam about the job.</h2>', est, flags=re.S)
 est = must_replace(est, 'Tell us a little about the job and your email app will open with everything filled in. Or skip the form and reach Sam directly.',
+                   'Fill in the form and it goes straight to Sam. Or skip the form and reach him directly.' if FORM_KEY else
                    'Fill in the form and your email app will open with everything ready to send. Or skip the form and reach Sam directly.')
+est = must_replace(est, '<form class="est-form reveal" novalidate>', f'<form class="est-form reveal" novalidate data-key="{FORM_KEY}">')
 FAQ = [
     ('Are estimates really free?', 'Yes. Sam comes out, looks at the project in person and gives you an honest quote at no cost and with no obligation.'),
     ('How long does a typical room take?', 'Most residential rooms are finished in a single day. For bigger jobs, ask Sam for a timeline when he quotes.'),
