@@ -454,6 +454,8 @@
 
     const setStatus = (t, cls) => { status.textContent = t; status.className = `lab-status mr-status ${cls || ''}`; };
     const rgbOf = hex => [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16));
+    // some systems leave a dropped photo's type blank, so trust the extension too
+    const isImg = f => /^image\//.test(f.type) || /\.(jpe?g|png|webp|gif|bmp|avif|heic|heif)$/i.test(f.name);
 
     function showColour() {
       nameEl.textContent = cur.name;
@@ -488,7 +490,7 @@
     }
 
     function load(file) {
-      if (!file || !/^image\//.test(file.type)) { setStatus('Use a photo', 'is-busy'); return; }
+      if (!file || !isImg(file)) { setStatus('Use a photo', 'is-busy'); return; }
       const url = URL.createObjectURL(file);
       const img = new Image();
       img.onload = () => {
@@ -657,6 +659,24 @@
     };
 
     $$('.mr-file', sec).forEach(f => f.addEventListener('change', () => { load(f.files[0]); f.value = ''; }));
+
+    // drag and drop anywhere on the section
+    const stageEl = $('.mr-stage', sec);
+    const hasFiles = e => Array.from(e.dataTransfer ? e.dataTransfer.types : []).includes('Files');
+    let depth = 0;
+    const dropOff = () => { depth = 0; stageEl.classList.remove('is-drop'); };
+    sec.addEventListener('dragenter', e => { if (!hasFiles(e)) return; e.preventDefault(); depth++; stageEl.classList.add('is-drop'); });
+    sec.addEventListener('dragover', e => { if (!hasFiles(e)) return; e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; });
+    sec.addEventListener('dragleave', e => { if (hasFiles(e) && --depth <= 0) dropOff(); });
+    sec.addEventListener('drop', e => {
+      if (!hasFiles(e)) return;
+      e.preventDefault();
+      dropOff();
+      const f = Array.from(e.dataTransfer.files).find(isImg);
+      if (f) load(f); else setStatus('Drop a photo file', 'is-busy');
+    });
+    // a photo dropped just outside the section would otherwise open in the tab and replace the page
+    ['dragover', 'drop'].forEach(ev => addEventListener(ev, e => { if (hasFiles(e)) e.preventDefault(); }));
 
     cv.addEventListener('click', e => {
       if (!orig || mode !== 'fill') return;
