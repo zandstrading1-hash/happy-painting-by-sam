@@ -38,9 +38,11 @@ def fill(tpl, ctx, **raw):
         for k in m.group(2).split('.'):
             v = v[int(k)] if isinstance(v, list) else v[k]
         return em(v) if m.group(3) == 'em' else esc(v)
-    out = re.sub(r'\{\{(=?)([\w.]+)(?:\|(\w+))?\}\}', sub, tpl)
-    assert '{{' not in out, out[out.index('{{'):][:80]
-    return out
+    pattern = r'\{\{(=?)([\w.]+)(?:\|(\w+))?\}\}'
+    # Check the template, not the output: client text may itself contain "{{".
+    leftover = re.sub(pattern, '', tpl)
+    assert '{{' not in leftover, leftover[leftover.index('{{'):][:80]
+    return re.sub(pattern, sub, tpl)
 
 # Web3Forms access key for the estimate form. Enter the inbox the requests should go to at
 # web3forms.com and the key is emailed there. Blank: the form opens the visitor's email app instead.
