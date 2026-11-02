@@ -11,7 +11,6 @@
   const body = document.body;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
-  const desktop = matchMedia('(min-width: 901px)');
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const easeInOut = t => -(Math.cos(Math.PI * t) - 1) / 2;
 
@@ -314,28 +313,6 @@
     t.style.letterSpacing = `${extra.toFixed(2)}px`;
   };
   fitBadge();
-
-  /* ---------------------------------------------------------
-     Service panels (home)
-     --------------------------------------------------------- */
-  const panels = $$('.svc');
-  const measurePanels = () => panels.forEach(p => {
-    const b = $('.svc-body', p);
-    if (b) p.style.setProperty('--bh', `${b.offsetHeight}px`);
-  });
-  const openPanel = p => panels.forEach(x => x.classList.toggle('is-open', x === p));
-  let hoverT = 0;
-  panels.forEach(p => {
-    p.addEventListener('mouseenter', () => {
-      if (!desktop.matches) return;
-      clearTimeout(hoverT);
-      hoverT = setTimeout(() => openPanel(p), 70);
-    });
-    p.addEventListener('mouseleave', () => clearTimeout(hoverT));
-    p.addEventListener('focusin', () => desktop.matches && openPanel(p));
-    p.addEventListener('click', () => desktop.matches && openPanel(p));
-  });
-  measurePanels();
 
   /* ---------------------------------------------------------
      Colour Lab
@@ -1072,11 +1049,10 @@
     rzT = setTimeout(() => {
       const wChanged = innerWidth !== vw;
       vw = innerWidth; vh = innerHeight;
-      measurePanels();
       heroPaint && heroPaint.resize();
       if (wChanged) buildDrips(footDrips, { seed: 7, base: 12, count: 16, minW: 12, maxW: 30, minL: 24, maxL: 112 });
       procPaths.forEach(o => { o.len = o.p.getTotalLength(); o.p.style.strokeDasharray = `${o.len}`; });
     }, 150);
   });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { measurePanels(); fitBadge(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitBadge);
 })();
