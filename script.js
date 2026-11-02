@@ -17,6 +17,11 @@
   let vw = innerWidth;
   let vh = innerHeight;
 
+  // visitors arriving on an old /page.html address see the clean /page one
+  if (/\.html$/.test(location.pathname)) {
+    history.replaceState(null, '', location.pathname.replace(/(index)?\.html$/, '') + location.search + location.hash);
+  }
+
   /* ---------------------------------------------------------
      Drips (footer)
      --------------------------------------------------------- */
@@ -379,7 +384,7 @@
       nameEl.textContent = btn.dataset.name;
       hexEl.textContent = c.toUpperCase();
       chip.style.setProperty('--c', c);
-      if (cta && touched) cta.href = `contact.html?type=Interior&colour=${encodeURIComponent(btn.dataset.name)}`;
+      if (cta && touched) cta.href = `/contact?type=Interior&colour=${encodeURIComponent(btn.dataset.name)}`;
       roll(c);
     }
     sws.forEach(x => x.addEventListener('click', () => select(x)));
@@ -419,7 +424,7 @@
     const sizeWrap = $('.mr-size', sec), sizeIn = $('input', sizeWrap);
     const undoB = $('.mr-undo', sec), beforeB = $('.mr-before', sec), resetB = $('.mr-reset', sec), saveB = $('.mr-save', sec);
     const cta = $('.mr-cta', sec), uploadTxt = $('.mr-upload-txt', sec);
-    const MAX = 1400;
+    const MAX = 1400, MIN = 1000;
 
     let W = 0, H = 0, orig = null, out = null;
     let Y, sY, sCb, sCr, G;        // luma, blurred luma/chroma for matching, edge strength
@@ -439,7 +444,7 @@
       hexEl.textContent = cur.hex.toUpperCase();
       custom.style.setProperty('--c', cur.hex);
       const pick = sws.some(s => s.dataset.name === cur.name) ? cur.name : `${cur.name} ${cur.hex.toUpperCase()}`;
-      cta.href = `contact.html?type=Interior&colour=${encodeURIComponent(pick)}`;
+      cta.href = `/contact?type=Interior&colour=${encodeURIComponent(pick)}`;
     }
 
     function setColour(name, hex) {
@@ -471,7 +476,10 @@
       const url = URL.createObjectURL(file);
       const img = new Image();
       img.onload = () => {
-        const s = Math.min(1, MAX / Math.max(img.naturalWidth, img.naturalHeight));
+        // small photos are enlarged first so the fill has enough detail to find edges
+        const long = Math.max(img.naturalWidth, img.naturalHeight);
+        const s = long > MAX ? MAX / long : long < MIN ? MIN / long : 1;
+        ctx.imageSmoothingQuality = 'high';
         W = cv.width = Math.round(img.naturalWidth * s);
         H = cv.height = Math.round(img.naturalHeight * s);
         ctx.drawImage(img, 0, 0, W, H);
@@ -498,6 +506,7 @@
         layer = new Int16Array(n).fill(-1);
         layers = []; history = []; selected = -1; last = null;
         cv.hidden = false; empty.hidden = true; note.hidden = false;
+        fit();
         uploadTxt.textContent = 'Use a different photo';
         [beforeB, saveB].forEach(b => { b.disabled = false; });
         syncButtons();
@@ -506,6 +515,16 @@
       img.onerror = () => { URL.revokeObjectURL(url); setStatus('Can’t read that photo', 'is-busy'); };
       img.src = url;
     }
+
+    // show the photo as large as the area allows, without stretching it
+    function fit() {
+      if (!W) return;
+      const maxW = cv.parentElement.clientWidth, maxH = innerHeight * 0.78;
+      const k = Math.min(maxW / W, maxH / H);
+      cv.style.width = `${Math.round(W * k)}px`;
+      cv.style.height = `${Math.round(H * k)}px`;
+    }
+    addEventListener('resize', fit);
 
     // grow a region from (x, y), stopping at sharp edges. Shading across one wall can vary as much
     // as two walls differ from each other, so the seed colour is only a loose limit.
@@ -849,26 +868,32 @@
     });
   }));
 
+  // every project photo on the page opens in the viewer
   const lb = $('.lightbox');
-  if (lb && shots.length) {
+  const zoomables = $$('.shot img, .pcard img, .svc-pic img, .teaser-grid img, .sd-media img, .ai-media img');
+  if (lb && zoomables.length) {
     const lbImg = $('.lb-fig img', lb), lbCap = $('.lb-fig figcaption', lb), lbCount = $('.lb-count', lb);
     let lbList = [], lbIdx = 0, lbReturn = null, sx = null;
+    const caption = img => {
+      const c = img.closest('figure, a');
+      const t = c && $('figcaption, span', c);
+      return t ? t.textContent.trim() : img.alt;
+    };
     const lbShow = i => {
       lbIdx = (i + lbList.length) % lbList.length;
-      const s = lbList[lbIdx];
-      const img = $('img', s);
+      const img = lbList[lbIdx];
       lbImg.src = img.currentSrc || img.src;
       lbImg.alt = img.alt;
-      lbCap.textContent = $('figcaption', s).textContent;
+      lbCap.textContent = caption(img);
       lbCount.textContent = `${String(lbIdx + 1).padStart(2, '0')} / ${String(lbList.length).padStart(2, '0')}`;
       lbImg.style.animation = 'none'; void lbImg.offsetWidth; lbImg.style.animation = '';
     };
-    const lbOpen = s => {
-      lbList = shots.filter(x => !x.classList.contains('is-hidden'));
+    const lbOpen = img => {
+      lbList = zoomables.filter(x => !x.closest('.is-hidden'));
       lbReturn = document.activeElement;
       lb.hidden = false;
       root.style.overflow = 'hidden';
-      lbShow(lbList.indexOf(s));
+      lbShow(lbList.indexOf(img));
       $('.lb-close', lb).focus();
     };
     const lbClose = () => {
@@ -876,7 +901,20 @@
       root.style.overflow = '';
       lbReturn && lbReturn.focus();
     };
-    shots.forEach(s => $('button', s).addEventListener('click', () => lbOpen(s)));
+    zoomables.forEach(img => {
+      const btn = img.closest('.shot button');
+      if (btn) { btn.addEventListener('click', () => lbOpen(img)); return; }
+      img.classList.add('zoomable');
+      // photos inside a link (home page preview) enlarge instead of following it; the link stays
+      // reachable by keyboard, so only photos outside links become focusable
+      if (!img.closest('a')) {
+        img.tabIndex = 0;
+        img.setAttribute('role', 'button');
+        img.setAttribute('aria-label', `Enlarge photo: ${img.alt}`);
+        img.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); lbOpen(img); } });
+      }
+      img.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); lbOpen(img); });
+    });
     $('.lb-close', lb).addEventListener('click', lbClose);
     $('.lb-prev', lb).addEventListener('click', () => lbShow(lbIdx - 1));
     $('.lb-next', lb).addEventListener('click', () => lbShow(lbIdx + 1));
@@ -929,7 +967,7 @@
     const btn = $('button[type="submit"]', form), btnHTML = btn.innerHTML;
     const again = $('.form-again', form);
 
-    // prefill from links like contact.html?type=Exterior&colour=Ojibway%20Sage
+    // prefill from links like /contact?type=Exterior&colour=Ojibway%20Sage
     const q = new URLSearchParams(location.search);
     const type = q.get('type');
     if (type) {

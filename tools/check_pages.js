@@ -12,7 +12,7 @@ const fs = require('fs');
 const { chromium } = require('playwright');
 
 const BASE = process.env.BASE || 'http://localhost:8765';
-const PAGES = ['index', 'services', 'work', 'colour-lab', 'about', 'contact'];
+const PAGES = ['index', 'services', 'work', 'colours', 'about', 'contact'];
 const SHOTS = process.argv.includes('--shots');
 const SHOT_DIR = path.join(__dirname, 'screenshots');
 

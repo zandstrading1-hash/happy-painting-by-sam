@@ -53,7 +53,7 @@ PHONE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1
 PAGES = [  # (file, nav label)
     ('services.html', 'Services'),
     ('work.html', 'Our Work'),
-    ('colour-lab.html', 'Colour Lab'),
+    ('colours.html', 'Colour Lab'),
     ('about.html', 'About'),
 ]
 
@@ -133,7 +133,7 @@ def footer(variant=''):
     f = must_replace(f, '<footer class="footer">', f'<footer class="footer{(" " + variant) if variant else ""}">')
     f = must_replace(f, '<a href="#estimate" class="foot-big">', '<a href="contact.html" class="foot-big">')
     f = must_replace(f, '<a href="#top" class="logo logo--foot" aria-label="Back to top">', '<a href="index.html" class="logo logo--foot" aria-label="Happy Painting by Sam, home">')
-    pages = '<ul><li><a href="services.html">Services</a></li><li><a href="work.html">Our Work</a></li><li><a href="colour-lab.html">Colour Lab</a></li><li><a href="about.html">About Sam</a></li><li><a href="contact.html">Free Estimate</a></li></ul>'
+    pages = '<ul><li><a href="services.html">Services</a></li><li><a href="work.html">Our Work</a></li><li><a href="colours.html">Colour Lab</a></li><li><a href="about.html">About Sam</a></li><li><a href="contact.html">Free Estimate</a></li></ul>'
     f = re.sub(r'<h4>Services</h4>\s*<ul>.*?</ul>', '<h4>Pages</h4>\n          ' + pages, f, flags=re.S)
     return '  </main>\n\n' + f
 
@@ -143,10 +143,19 @@ def actionbar():
     return must_replace(a, '<a href="#estimate" class="ab-main">', '<a href="contact.html" class="ab-main">')
 
 
+PAGE_FILES = ('index', 'services', 'work', 'colours', 'about', 'contact')
+
+
+def clean_links(doc):
+    # GitHub Pages serves /services from services.html, so links leave off ".html"
+    return re.sub(r'href="(%s)\.html(?=["#?])' % '|'.join(PAGE_FILES),
+                  lambda m: 'href="/' + ('' if m[1] == 'index' else m[1]), doc)
+
+
 def page(fname, key, active, body, footer_variant='', home=False):
     meta = C['pages'][key]
-    doc = head(meta['title'], meta['description'], home) + header(active) + body + footer(footer_variant) + '\n' + actionbar()
-    doc = doc.replace('\n\n\n', '\n\n')
+    doc = head(meta['title'], meta['description'], home) + header(active) + body + footer(footer_variant) + '\n' + P['lightbox'] + actionbar()
+    doc = clean_links(doc.replace('\n\n\n', '\n\n'))
     assert 'href="#estimate"' not in doc and 'href="#services"' not in doc, fname
     (OUT / fname).write_text(doc)
     return fname, len(doc)
@@ -200,7 +209,7 @@ lab_teaser = '''    <!-- ============ COLOUR LAB TEASER ============ -->
             <p class="eyebrow">Colour Lab</p>
             <h2 id="lt-title">''' + esc(H['lab']['title']) + '''</h2>
             <p>''' + esc(H['lab']['text']) + '''</p>
-            <a class="btn btn--ink" href="colour-lab.html">Open the Colour Lab <span class="arr">&rarr;</span></a>
+            <a class="btn btn--ink" href="colours.html">Open the Colour Lab <span class="arr">&rarr;</span></a>
           </div>
           <div class="lt-swatches" aria-hidden="true">''' + ''.join(f'<span style="--c:{c}"></span>' for c in swatches) + '''</div>
         </div>
@@ -245,7 +254,7 @@ gallery = fill(P['gallery'], C, gallery_items='\n'.join(
     for g in C['gallery']))
 gallery = re.sub(r'<div class="sec-head sec-head--row">\s*<div>.*?</div>\s*(<div class="filters)', r'<div class="sec-head sec-head--row">\n          \1', gallery, flags=re.S)
 gallery = gallery.replace('<section class="work" id="work" aria-labelledby="work-title">', '<section class="work" id="work" aria-label="Project gallery">')
-results.append(page('work.html', 'work', 'work.html', intro('Our Work', 'work') + gallery + P['lightbox'] + cta_band()))
+results.append(page('work.html', 'work', 'work.html', intro('Our Work', 'work') + gallery + cta_band()))
 
 # ================================================================ COLOUR LAB
 lab = P['lab']
@@ -254,7 +263,7 @@ lab = must_replace(lab, '<section class="lab" id="colour-lab" aria-labelledby="l
 lab = must_replace(lab, '<a class="btn btn--ink lab-cta reveal" href="#estimate">', '<a class="btn btn--ink lab-cta reveal" href="contact.html?type=Interior">')
 lab = must_replace(lab, 'Tap a swatch and watch the room get rolled. Your real pick happens with real paint chips, in your own light, at your free estimate.',
                    'Tap a swatch (or the room itself) and watch the wall get rolled. Your real pick happens with real paint chips, in your own light, at your free estimate.')
-results.append(page('colour-lab.html', 'lab', 'colour-lab.html',
+results.append(page('colours.html', 'lab', 'colours.html',
                     intro('Colour Lab', 'lab') + lab + P['myroom'] + cta_band(C['lab']['cta_title'], C['lab']['cta_text'])))
 
 # ================================================================ ABOUT
@@ -301,6 +310,20 @@ faq = '''    <!-- ============ FAQ ============ -->
 
 '''
 results.append(page('contact.html', 'contact', 'contact.html', intro('Free Estimate', 'contact') + est + faq, footer_variant='footer--cream'))
+
+# the Colour Lab used to live at colour-lab.html; keep old links and search results working
+(OUT / 'colour-lab.html').write_text('''<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8" />
+  <title>Colour Lab | Happy Painting by Sam</title>
+  <meta name="robots" content="noindex" />
+  <meta http-equiv="refresh" content="0; url=/colours" />
+  <script>location.replace('/colours' + location.search + location.hash);</script>
+</head>
+<body><p>The Colour Lab has moved to <a href="/colours">happypaintingbysam.ca/colours</a>.</p></body>
+</html>
+''')
 
 for r in results:
     print(*r)
