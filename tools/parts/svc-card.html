@@ -1,14 +1,14 @@
-          <article class="svc">
-            <div class="svc-pic" style="--src: url('{{=src}}')">
+          <article class="svc" data-e-item="{{=base}}">
+            <div class="svc-pic" data-e-bg="{{=base}}.image" style="--src: url('{{=src}}')">
               {{=image}}
               <span class="svc-num">{{=num}}</span>
             </div>
             <div class="svc-text">
-              <h3 class="svc-title">{{title}}</h3>
+              <h3 class="svc-title" data-e="{{@title}}">{{title}}</h3>
               <div class="svc-body">
-                <p>{{text}}</p>
-                <ul>{{=items}}</ul>
-                <a href="{{=link}}" class="svc-link">{{link_text}} &rarr;</a>
+                <p data-e="{{@text}}">{{text}}</p>
+                <ul data-e-list="{{=base}}.items">{{=items}}</ul>
+                <a href="{{=link}}" class="svc-link"><span data-e="{{@link_text}}">{{link_text}}</span> &rarr;</a>
               </div>
             </div>
           </article>

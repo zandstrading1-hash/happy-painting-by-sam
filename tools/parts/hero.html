@@ -11,12 +11,12 @@
             <span class="hl"><span class="hl-in"><em class="happy">Happy<svg class="swoosh" viewBox="0 0 300 30" preserveAspectRatio="none" aria-hidden="true"><path d="M4 22C70 6 170 4 296 14" /></svg></em> homes.</span></span>
           </h1>
           <p class="hero-sig" aria-hidden="true">painted by Sam</p>
-          <p class="hero-lede">{{hero.lede}}</p>
+          <p class="hero-lede" data-e="{{@hero.lede}}">{{hero.lede}}</p>
           <div class="hero-ctas">
             <a class="btn btn--orange btn--lg" href="#estimate">Get my free estimate <span class="arr">&rarr;</span></a>
             <a class="btn btn--line btn--lg" href="tel:+15199917783">Call 519-991-7783</a>
           </div>
-          <ul class="hero-ticks">
+          <ul class="hero-ticks" data-e-list="{{@hero.ticks}}">
 {{=hero_ticks}}
           </ul>
         </div>
