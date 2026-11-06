@@ -6,10 +6,13 @@ the repo root (index, services, work, colour-lab, about, contact).
 style.css, script.js and img/ are edited directly, not generated.
 
 Page copy (headings, text, lists, FAQ, photos) lives in content/site.json as plain text, which the
-client dashboard edits; content/schema.json says which fields it may change. Text is HTML-escaped
+client dashboard edits; content/schema.json says which fields it may change. Every other text and
+photo on the pages is made editable too, by tools/page_edits.py. Text is HTML-escaped
 here, and *stars* in headings become <em>. Parts use {{path.to.value}} placeholders for it.
 """
 import html, json, pathlib, re
+
+from page_edits import mark_page
 
 PARTS = pathlib.Path(__file__).parent / 'parts'
 OUT = pathlib.Path(__file__).resolve().parents[1]  # repo root
@@ -179,6 +182,7 @@ def page(fname, key, active, body, footer_variant='', home=False):
     meta = C['pages'][key]
     doc = head(meta['title'], meta['description'], home) + header(active) + body + footer(footer_variant) + '\n' + P['lightbox'] + actionbar()
     doc = clean_links(doc.replace('\n\n\n', '\n\n'))
+    doc = mark_page(doc, fname.removesuffix('.html'), C.get('free', {}))
     assert 'href="#estimate"' not in doc and 'href="#services"' not in doc, fname
     (OUT / fname).write_text(doc)
     return fname, len(doc)
