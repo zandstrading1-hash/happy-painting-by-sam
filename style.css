@@ -358,57 +358,14 @@ html:not(.js) .hero-sig { clip-path: none; }
 .lab-status { margin-left: auto; font-size: .78rem; font-weight: 700; padding: .45em .8em; border-radius: 999px; background: var(--paper-2); white-space: nowrap; }
 .lab-status.is-busy { background: var(--orange); color: var(--ink); }
 .lab-status.is-done { background: var(--teal); color: var(--ink); }
-.trim-toggle { display: inline-flex; align-items: center; gap: 6px; margin: 18px 0 26px; padding: 5px; border-radius: 999px; background: var(--paper-2); }
-.trim-toggle span { font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--muted); padding: 0 8px 0 10px; }
-.tt { font-size: .85rem; font-weight: 700; padding: .55em 1em; border-radius: 999px; transition: background .3s, color .3s; }
-.tt.is-on { background: var(--ink); color: var(--cream); }
-.lab-cta { display: flex; width: fit-content; }
+.lab-cta { display: flex; width: fit-content; margin-top: 26px; }
 .lab-stage { position: relative; border-radius: var(--r-lg); overflow: hidden; background: #fff; box-shadow: 0 50px 80px -40px rgba(10,11,13,.5), 0 0 0 1px rgba(0,0,0,.05); }
 .lab-stage::before { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit; box-shadow: inset 0 0 0 10px #fff; }
-.room { width: 100%; height: auto; --trim: #fbfaf6; }
-.room .t { fill: var(--trim); transition: fill .6s; }
+.room-photo { position: relative; aspect-ratio: 4 / 3; cursor: pointer; }
+.room-photo img, .room-photo canvas { display: block; width: 100%; height: 100%; object-fit: cover; }
+.room-photo canvas { position: absolute; inset: 0; opacity: 0; transition: opacity .4s; }
+.room-photo.is-ready canvas { opacity: 1; }
 .lab-note { position: absolute; right: 22px; bottom: 16px; margin: 0; font-size: .72rem; color: rgba(10,11,13,.6); z-index: 3; background: rgba(255,255,255,.75); padding: .3em .7em; border-radius: 999px; }
-
-/* ---------- Paint your own room ---------- */
-.myroom { background: var(--paper-2); padding: clamp(90px, 12vw, 150px) 0; }
-.mr-head { max-width: 40em; margin-bottom: clamp(30px, 4vw, 50px); }
-.mr-head > p:not(.eyebrow) { color: var(--muted); }
-.mr-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(30px, 5vw, 70px); align-items: start; }
-.mr-upload { cursor: pointer; }
-.mr-upload input, .mr-empty input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-.mr-upload:focus-within, .mr-empty:focus-within { outline: 2px solid var(--ink); outline-offset: 3px; }
-.mr-swatches { margin: 26px 0 18px; }
-.mr-custom { position: relative; cursor: pointer; }
-.mr-custom::after { content: "+"; position: absolute; inset: 0; display: grid; place-items: center; font-weight: 800; font-size: 1.2rem; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.5); }
-.mr-custom input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-.mr-spread { display: grid; gap: 8px; margin: 22px 0 18px; max-width: 470px; }
-.mr-spread span { font-weight: 700; font-size: .9rem; }
-.mr-spread small { display: block; font-weight: 500; color: var(--muted); font-size: .8rem; margin-top: 2px; }
-.mr-spread input { width: 100%; accent-color: var(--teal); }
-.mr-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; max-width: 470px; }
-.mr-actions .btn:disabled { opacity: .4; pointer-events: none; }
-.mr-modes { margin: 4px 0 0; }
-.mr-canvas.is-brush { touch-action: none; cursor: cell; }
-.mr-before { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: none; }
-.mr-cta { display: flex; width: fit-content; }
-.mr-stage { position: relative; border-radius: var(--r-lg); overflow: hidden; background: #fff; box-shadow: 0 50px 80px -40px rgba(10,11,13,.5), 0 0 0 1px rgba(0,0,0,.05); }
-.mr-canvas { display: block; margin: 0 auto; cursor: crosshair; }
-.mr-empty { display: grid; place-items: center; align-content: center; gap: 10px; min-height: clamp(300px, 40vw, 460px); padding: 30px; text-align: center; cursor: pointer; border: 2px dashed rgba(10,11,13,.18); border-radius: inherit; transition: background .3s; }
-.mr-empty:hover { background: var(--cream); }
-.mr-empty svg { width: 56px; height: 56px; fill: var(--teal); }
-.mr-empty b { font-family: var(--display); font-size: 1.3rem; letter-spacing: -.02em; }
-.mr-empty span { color: var(--muted); font-size: .9rem; }
-.mr-note { left: 16px; right: auto; }
-.mr-drop { position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; padding: 20px; text-align: center; border-radius: inherit; background: rgba(31, 163, 173, .9); box-shadow: inset 0 0 0 3px var(--ink); color: var(--ink); opacity: 0; pointer-events: none; transition: opacity .2s; }
-.mr-drop b { font-family: var(--display); font-size: clamp(1.2rem, 2.2vw, 1.6rem); letter-spacing: -.02em; background: var(--ink); color: var(--cream); padding: .6em 1.1em; border-radius: 999px; }
-.mr-stage.is-drop .mr-drop { opacity: 1; }
-@media (hover: none) { .mr-hint-drag { display: none; } }
-@media (hover: hover) { .mr-hint-tap { display: none; } }
-.myroom [hidden] { display: none; }
-@media (max-width: 900px) {
-  .mr-grid { grid-template-columns: 1fr; }
-  .mr-stage { order: -1; }
-}
 
 /* ---------- Process ---------- */
 .process { background: var(--cream); padding: clamp(90px, 12vw, 150px) 0; overflow: hidden; }
@@ -700,8 +657,6 @@ html:not(.js) .quote-text span { color: var(--ink); }
 
   .swatches { grid-template-columns: repeat(9, 1fr); gap: 7px; }
   .lab-status { display: none; }
-  .lab-status.mr-status { display: block; }
-  .mr-readout { flex-wrap: wrap; }
   .tiles { grid-template-columns: 1fr; }
   .masonry { columns: 2; column-gap: 10px; }
   .shot { margin-bottom: 10px; border-radius: 12px; }

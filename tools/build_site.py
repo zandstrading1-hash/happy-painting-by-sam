@@ -290,9 +290,9 @@ lab = re.sub(r'\s*<p class="eyebrow reveal">Colour Lab</p>\s*<h2 id="lab-title" 
 lab = must_replace(lab, '<section class="lab" id="colour-lab" aria-labelledby="lab-title">', '<section class="lab" id="colour-lab" aria-label="Colour Lab">')
 lab = must_replace(lab, '<a class="btn btn--ink lab-cta reveal" href="#estimate">', '<a class="btn btn--ink lab-cta reveal" href="contact.html?type=Interior">')
 lab = must_replace(lab, 'Tap a swatch and watch the room get rolled. Your real pick happens with real paint chips, in your own light, at your free estimate.',
-                   'Tap a swatch (or the room itself) and watch the wall get rolled. Your real pick happens with real paint chips, in your own light, at your free estimate.')
+                   'Tap a swatch (or the room itself) and watch the walls get rolled. Your real pick happens with real paint chips, in your own light, at your free estimate.')
 results.append(page('colours.html', 'lab', 'colours.html',
-                    intro('Colour Lab', 'lab') + lab + P['myroom'] + cta_band(C['lab']['cta_title'], C['lab']['cta_text'], ('lab.cta_title', 'lab.cta_text'))))
+                    intro('Colour Lab', 'lab') + lab + cta_band(C['lab']['cta_title'], C['lab']['cta_text'], ('lab.cta_title', 'lab.cta_text'))))
 
 # ================================================================ ABOUT
 A = C['about']
