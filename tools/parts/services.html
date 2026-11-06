@@ -3,10 +3,10 @@
       <div class="wrap">
         <div class="sec-head sec-head--light">
           <p class="eyebrow eyebrow--light reveal">Services</p>
-          <h2 id="svc-title" class="reveal split">{{services.title}}</h2>
+          <h2 id="svc-title" class="reveal split" data-e="{{@services.title}}">{{services.title}}</h2>
         </div>
 
-        <div class="svc-panels">
+        <div class="svc-panels" data-e-list="{{@services.cards}}">
 {{=svc_cards}}        </div>
       </div>
     </section>

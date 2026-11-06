@@ -91,7 +91,6 @@
 
     <!-- ============ HERO ============ -->
     <section class="hero" aria-labelledby="hero-title">
-      <canvas class="hero-paint" aria-hidden="true"></canvas>
       <div class="hero-veil" aria-hidden="true"></div>
 
       <div class="wrap hero-grid">
@@ -102,15 +101,15 @@
             <span class="hl"><span class="hl-in"><em class="happy">Happy<svg class="swoosh" viewBox="0 0 300 30" preserveAspectRatio="none" aria-hidden="true"><path d="M4 22C70 6 170 4 296 14" /></svg></em> homes.</span></span>
           </h1>
           <p class="hero-sig" aria-hidden="true">painted by Sam</p>
-          <p class="hero-lede">Interior, exterior and commercial painting across Windsor and Essex County. Sam runs every job personally: an honest quote, sharp lines, protected floors and a full clean-up before he leaves.</p>
+          <p class="hero-lede" data-e="home.hero.lede">Interior, exterior and commercial painting across Windsor and Essex County. Sam runs every job personally: an honest quote, sharp lines, protected floors and a full clean-up before he leaves.</p>
           <div class="hero-ctas">
             <a class="btn btn--orange btn--lg" href="/contact">Get my free estimate <span class="arr">&rarr;</span></a>
             <a class="btn btn--line btn--lg" href="tel:+15199917783">Call 519-991-7783</a>
           </div>
-          <ul class="hero-ticks">
-            <li>Free estimates</li>
-            <li>Most rooms done in a day</li>
-            <li>Full clean-up</li>
+          <ul class="hero-ticks" data-e-list="home.hero.ticks">
+            <li data-e-item="home.hero.ticks.0" data-e="home.hero.ticks.0">Free estimates</li>
+            <li data-e-item="home.hero.ticks.1" data-e="home.hero.ticks.1">Most rooms done in a day</li>
+            <li data-e-item="home.hero.ticks.2" data-e="home.hero.ticks.2">Full clean-up</li>
           </ul>
         </div>
 
@@ -140,7 +139,6 @@
       </a>
 
       <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><i></i></div>
-      <p class="hero-hint" aria-hidden="true">psst, move your mouse. It's wet paint.</p>
     </section>
 
     <!-- ============ SERVICES ============ -->
@@ -148,63 +146,63 @@
       <div class="wrap">
         <div class="sec-head sec-head--light">
           <p class="eyebrow eyebrow--light reveal">Services</p>
-          <h2 id="svc-title" class="reveal split">What we paint.</h2>
+          <h2 id="svc-title" class="reveal split" data-e="home.services.title">What we paint.</h2>
         </div>
 
-        <div class="svc-panels">
-          <article class="svc">
-            <div class="svc-pic" style="--src: url('img/open-plan-blue-walls.webp')">
-              <img src="img/open-plan-blue-walls.webp" alt="Open-plan living area freshly painted in a deep blue" loading="lazy" width="900" height="1200" />
+        <div class="svc-panels" data-e-list="home.services.cards">
+          <article class="svc" data-e-item="home.services.cards.0">
+            <div class="svc-pic" data-e-bg="home.services.cards.0.image" style="--src: url('img/open-plan-blue-walls.webp')">
+              <img data-e-img="home.services.cards.0.image" src="img/open-plan-blue-walls.webp" alt="Open-plan living area freshly painted in a deep blue" loading="lazy" width="900" height="1200" />
               <span class="svc-num">01</span>
             </div>
             <div class="svc-text">
-              <h3 class="svc-title">Interior</h3>
+              <h3 class="svc-title" data-e="home.services.cards.0.title">Interior</h3>
               <div class="svc-body">
-                <p>Walls, ceilings, trim, doors and full-room refreshes, with lines so crisp you'll want to show them off.</p>
-                <ul><li>Living rooms &amp; bedrooms</li><li>Kitchens &amp; bathrooms</li><li>Trim, doors &amp; baseboards</li><li>Basements &amp; hallways</li><li>Accent &amp; feature walls</li></ul>
-                <a href="/services#interior" class="svc-link">More on interior painting &rarr;</a>
+                <p data-e="home.services.cards.0.text">Walls, ceilings, trim, doors and full-room refreshes, with lines so crisp you'll want to show them off.</p>
+                <ul data-e-list="home.services.cards.0.items"><li data-e-item="home.services.cards.0.items.0" data-e="home.services.cards.0.items.0">Living rooms &amp; bedrooms</li><li data-e-item="home.services.cards.0.items.1" data-e="home.services.cards.0.items.1">Kitchens &amp; bathrooms</li><li data-e-item="home.services.cards.0.items.2" data-e="home.services.cards.0.items.2">Trim, doors &amp; baseboards</li><li data-e-item="home.services.cards.0.items.3" data-e="home.services.cards.0.items.3">Basements &amp; hallways</li><li data-e-item="home.services.cards.0.items.4" data-e="home.services.cards.0.items.4">Accent &amp; feature walls</li></ul>
+                <a href="/services#interior" class="svc-link"><span data-e="home.services.cards.0.link_text">More on interior painting</span> &rarr;</a>
               </div>
             </div>
           </article>
-          <article class="svc">
-            <div class="svc-pic" style="--src: url('img/kitchen-cabinet-refinish.webp')">
-              <img src="img/kitchen-cabinet-refinish.webp" alt="Kitchen with freshly painted white shaker cabinets" loading="lazy" width="1200" height="900" />
+          <article class="svc" data-e-item="home.services.cards.1">
+            <div class="svc-pic" data-e-bg="home.services.cards.1.image" style="--src: url('img/kitchen-cabinet-refinish.webp')">
+              <img data-e-img="home.services.cards.1.image" src="img/kitchen-cabinet-refinish.webp" alt="Kitchen with freshly painted white shaker cabinets" loading="lazy" width="1200" height="900" />
               <span class="svc-num">02</span>
             </div>
             <div class="svc-text">
-              <h3 class="svc-title">Cabinets</h3>
+              <h3 class="svc-title" data-e="home.services.cards.1.title">Cabinets</h3>
               <div class="svc-body">
-                <p>Tired kitchen cabinets and built-ins brought back with a clean, fresh finish.</p>
-                <ul><li>Kitchen cabinet refinishing</li><li>Vanities &amp; built-ins</li><li>Millwork &amp; trim detail</li><li>Basement kitchenettes</li></ul>
-                <a href="/services#cabinets" class="svc-link">More on cabinet painting &rarr;</a>
+                <p data-e="home.services.cards.1.text">Tired kitchen cabinets and built-ins brought back with a clean, fresh finish.</p>
+                <ul data-e-list="home.services.cards.1.items"><li data-e-item="home.services.cards.1.items.0" data-e="home.services.cards.1.items.0">Kitchen cabinet refinishing</li><li data-e-item="home.services.cards.1.items.1" data-e="home.services.cards.1.items.1">Vanities &amp; built-ins</li><li data-e-item="home.services.cards.1.items.2" data-e="home.services.cards.1.items.2">Millwork &amp; trim detail</li><li data-e-item="home.services.cards.1.items.3" data-e="home.services.cards.1.items.3">Basement kitchenettes</li></ul>
+                <a href="/services#cabinets" class="svc-link"><span data-e="home.services.cards.1.link_text">More on cabinet painting</span> &rarr;</a>
               </div>
             </div>
           </article>
-          <article class="svc">
-            <div class="svc-pic" style="--src: url('img/exterior-stucco-brick.webp')">
-              <img src="img/exterior-stucco-brick.webp" alt="Home exterior with painted stucco and stone in winter" loading="lazy" width="900" height="1200" />
+          <article class="svc" data-e-item="home.services.cards.2">
+            <div class="svc-pic" data-e-bg="home.services.cards.2.image" style="--src: url('img/exterior-stucco-brick.webp')">
+              <img data-e-img="home.services.cards.2.image" src="img/exterior-stucco-brick.webp" alt="Home exterior with painted stucco and stone in winter" loading="lazy" width="900" height="1200" />
               <span class="svc-num">03</span>
             </div>
             <div class="svc-text">
-              <h3 class="svc-title">Exterior</h3>
+              <h3 class="svc-title" data-e="home.services.cards.2.title">Exterior</h3>
               <div class="svc-body">
-                <p>Curb appeal that holds up to Essex County summers and winters.</p>
-                <ul><li>Siding &amp; stucco</li><li>Brick painting &amp; staining</li><li>Trim, soffits &amp; doors</li><li>Decks, fences, porches &amp; garages</li></ul>
-                <a href="/services#exterior" class="svc-link">More on exterior painting &rarr;</a>
+                <p data-e="home.services.cards.2.text">Curb appeal that holds up to Essex County summers and winters.</p>
+                <ul data-e-list="home.services.cards.2.items"><li data-e-item="home.services.cards.2.items.0" data-e="home.services.cards.2.items.0">Siding &amp; stucco</li><li data-e-item="home.services.cards.2.items.1" data-e="home.services.cards.2.items.1">Brick painting &amp; staining</li><li data-e-item="home.services.cards.2.items.2" data-e="home.services.cards.2.items.2">Trim, soffits &amp; doors</li><li data-e-item="home.services.cards.2.items.3" data-e="home.services.cards.2.items.3">Decks, fences, porches &amp; garages</li></ul>
+                <a href="/services#exterior" class="svc-link"><span data-e="home.services.cards.2.link_text">More on exterior painting</span> &rarr;</a>
               </div>
             </div>
           </article>
-          <article class="svc">
-            <div class="svc-pic" style="--src: url('img/hallway-doors-trim.webp')">
-              <img src="img/hallway-doors-trim.webp" alt="Hallway with doors and trim freshly painted, floors protected" loading="lazy" width="900" height="1200" />
+          <article class="svc" data-e-item="home.services.cards.3">
+            <div class="svc-pic" data-e-bg="home.services.cards.3.image" style="--src: url('img/hallway-doors-trim.webp')">
+              <img data-e-img="home.services.cards.3.image" src="img/hallway-doors-trim.webp" alt="Hallway with doors and trim freshly painted, floors protected" loading="lazy" width="900" height="1200" />
               <span class="svc-num">04</span>
             </div>
             <div class="svc-text">
-              <h3 class="svc-title">Commercial</h3>
+              <h3 class="svc-title" data-e="home.services.cards.3.title">Commercial</h3>
               <div class="svc-body">
-                <p>Offices, storefronts, rentals and listings, painted on schedule so your space gets back to business.</p>
-                <ul><li>Offices &amp; retail spaces</li><li>Property management &amp; rentals</li><li>Real-estate refreshes</li><li>Cabinet &amp; millwork finishes</li></ul>
-                <a href="/services#commercial" class="svc-link">More on commercial painting &rarr;</a>
+                <p data-e="home.services.cards.3.text">Offices, storefronts, rentals and listings, painted on schedule so your space gets back to business.</p>
+                <ul data-e-list="home.services.cards.3.items"><li data-e-item="home.services.cards.3.items.0" data-e="home.services.cards.3.items.0">Offices &amp; retail spaces</li><li data-e-item="home.services.cards.3.items.1" data-e="home.services.cards.3.items.1">Property management &amp; rentals</li><li data-e-item="home.services.cards.3.items.2" data-e="home.services.cards.3.items.2">Real-estate refreshes</li><li data-e-item="home.services.cards.3.items.3" data-e="home.services.cards.3.items.3">Cabinet &amp; millwork finishes</li></ul>
+                <a href="/services#commercial" class="svc-link"><span data-e="home.services.cards.3.link_text">More on commercial painting</span> &rarr;</a>
               </div>
             </div>
           </article>
@@ -217,7 +215,7 @@
       <div class="wrap">
         <div class="sec-head">
           <p class="eyebrow reveal">How it works</p>
-          <h2 id="proc-title" class="reveal split">Three steps to a happier home.</h2>
+          <h2 id="proc-title" class="reveal split" data-e="home.process.title">Three steps to a happier home.</h2>
         </div>
         <div class="proc">
           <svg class="proc-line proc-line--h" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true"><path d="M60 80C220 -10 340 170 600 80S980 -10 1140 80" /></svg>
@@ -225,20 +223,20 @@
           <ol class="proc-steps">
             <li class="step">
               <span class="blob"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M52 6c18 0 30 12 38 26s6 32-4 46-26 18-40 16S16 86 10 70 6 36 18 22 34 6 52 6z" /></svg><b>1</b></span>
-              <h3>Reach out</h3>
-              <p>Call, text or email. Tell Sam what you're thinking, whether it's one room or the whole house.</p>
+              <h3 data-e="home.process.steps.0.title">Reach out</h3>
+              <p data-e="home.process.steps.0.text">Call, text or email. Tell Sam what you're thinking, whether it's one room or the whole house.</p>
               <a href="tel:+15199917783" class="step-link">519-991-7783</a>
             </li>
             <li class="step">
               <span class="blob"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M46 4c20-2 38 10 46 28s2 38-12 50-34 16-50 8S4 64 6 46 26 6 46 4z" /></svg><b>2</b></span>
-              <h3>Free, honest quote</h3>
-              <p>Sam comes out, looks at the job in person and gives you a straight quote, with no pressure.</p>
+              <h3 data-e="home.process.steps.1.title">Free, honest quote</h3>
+              <p data-e="home.process.steps.1.text">Sam comes out, looks at the job in person and gives you a straight quote, with no pressure.</p>
               <span class="step-link">No-cost visit</span>
             </li>
             <li class="step">
               <span class="blob"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 8c22-4 40 14 42 34s-8 40-28 48-40 2-50-14S4 40 14 26 30 12 50 8z" /></svg><b>3</b></span>
-              <h3>Prep, paint, clean up</h3>
-              <p>Floors and furniture covered, edges taped, every coat done right. Then a full clean-up before he leaves.</p>
+              <h3 data-e="home.process.steps.2.title">Prep, paint, clean up</h3>
+              <p data-e="home.process.steps.2.text">Floors and furniture covered, edges taped, every coat done right. Then a full clean-up before he leaves.</p>
               <span class="step-link">You come home happy</span>
             </li>
           </ol>
@@ -252,17 +250,17 @@
         <div class="sec-head sec-head--row">
           <div>
             <p class="eyebrow reveal">Recent work</p>
-            <h2 id="teaser-title" class="reveal split">Fresh off the drop cloth.</h2>
+            <h2 id="teaser-title" class="reveal split" data-e="home.teaser.title">Fresh off the drop cloth.</h2>
           </div>
           <a class="btn btn--line-ink reveal" href="/work">See all 16 projects <span class="arr">&rarr;</span></a>
         </div>
-        <div class="teaser-grid">
-          <a class="reveal" href="/work"><img src="img/open-plan-blue-walls.webp" alt="Open-plan blue walls" loading="lazy" width="900" height="1200" /><span>Open-plan blue walls</span></a>
-          <a class="reveal" href="/work"><img src="img/kitchen-cabinet-refinish.webp" alt="Kitchen cabinet refinish" loading="lazy" width="1200" height="900" /><span>Kitchen cabinet refinish</span></a>
-          <a class="reveal" href="/work"><img src="img/exterior-stucco-brick.webp" alt="Exterior stucco &amp; brick" loading="lazy" width="900" height="1200" /><span>Exterior stucco &amp; brick</span></a>
-          <a class="reveal" href="/work"><img src="img/entry-hall-stairs.webp" alt="Entry hall &amp; stairs" loading="lazy" width="1200" height="900" /><span>Entry hall &amp; stairs</span></a>
-          <a class="reveal" href="/work"><img src="img/bedroom-accent-wall.webp" alt="Bedroom accent wall" loading="lazy" width="1200" height="900" /><span>Bedroom accent wall</span></a>
-          <a class="reveal" href="/work"><img src="img/warm-white-cabinets.webp" alt="Warm white cabinets" loading="lazy" width="1200" height="900" /><span>Warm white cabinets</span></a>
+        <div class="teaser-grid" data-e-list="home.teaser.items">
+          <a class="reveal" href="/work" data-e-item="home.teaser.items.0"><img data-e-img="home.teaser.items.0.image" src="img/open-plan-blue-walls.webp" alt="Open-plan blue walls" loading="lazy" width="900" height="1200" /><span data-e="home.teaser.items.0.caption">Open-plan blue walls</span></a>
+          <a class="reveal" href="/work" data-e-item="home.teaser.items.1"><img data-e-img="home.teaser.items.1.image" src="img/kitchen-cabinet-refinish.webp" alt="Kitchen cabinet refinish" loading="lazy" width="1200" height="900" /><span data-e="home.teaser.items.1.caption">Kitchen cabinet refinish</span></a>
+          <a class="reveal" href="/work" data-e-item="home.teaser.items.2"><img data-e-img="home.teaser.items.2.image" src="img/exterior-stucco-brick.webp" alt="Exterior stucco &amp; brick" loading="lazy" width="900" height="1200" /><span data-e="home.teaser.items.2.caption">Exterior stucco &amp; brick</span></a>
+          <a class="reveal" href="/work" data-e-item="home.teaser.items.3"><img data-e-img="home.teaser.items.3.image" src="img/entry-hall-stairs.webp" alt="Entry hall &amp; stairs" loading="lazy" width="1200" height="900" /><span data-e="home.teaser.items.3.caption">Entry hall &amp; stairs</span></a>
+          <a class="reveal" href="/work" data-e-item="home.teaser.items.4"><img data-e-img="home.teaser.items.4.image" src="img/bedroom-accent-wall.webp" alt="Bedroom accent wall" loading="lazy" width="1200" height="900" /><span data-e="home.teaser.items.4.caption">Bedroom accent wall</span></a>
+          <a class="reveal" href="/work" data-e-item="home.teaser.items.5"><img data-e-img="home.teaser.items.5.image" src="img/warm-white-cabinets.webp" alt="Warm white cabinets" loading="lazy" width="1200" height="900" /><span data-e="home.teaser.items.5.caption">Warm white cabinets</span></a>
         </div>
       </div>
     </section>
@@ -272,10 +270,10 @@
       <div class="wrap">
         <p class="quote-mark" aria-hidden="true">&ldquo;</p>
         <blockquote class="quote-text">
-          <p><span>Precision,</span> <span>cleanliness,</span> <span>and</span> <span>fast</span> <span>completion.</span></p>
+          <p data-e="home.quote.text" data-e-fmt="words"><span>Precision,</span> <span>cleanliness,</span> <span>and</span> <span>fast</span> <span>completion.</span></p>
         </blockquote>
         <div class="quote-foot">
-          <span class="quote-who">From a Happy Painting customer</span>
+          <span class="quote-who" data-e="home.quote.who">From a Happy Painting customer</span>
           <a class="btn btn--ink btn--sm" href="https://www.google.com/maps/place/Happy+Painting+by+Sam/@42.2667181,-82.9732604,17z/data=!4m8!3m7!1s0x883b2bfd56befb15:0x50c560ab92440d8e!8m2!3d42.2667181!4d-82.9732604!9m1!1b1!16s%2Fg%2F11yw_9b766" target="_blank" rel="noopener">Read Sam's Google reviews &nearr;</a>
         </div>
       </div>
@@ -287,8 +285,8 @@
         <div class="lt-inner reveal">
           <div>
             <p class="eyebrow">Colour Lab</p>
-            <h2 id="lt-title">Can't pick a colour? Take one for a spin.</h2>
-            <p>Tap a swatch and watch a room get rolled in it, then switch the trim between crisp white and modern black.</p>
+            <h2 id="lt-title" data-e="home.lab.title">Can't pick a colour? Take one for a spin.</h2>
+            <p data-e="home.lab.text">Tap a swatch and watch a room get rolled in it, then switch the trim between crisp white and modern black.</p>
             <a class="btn btn--ink" href="/colours">Open the Colour Lab <span class="arr">&rarr;</span></a>
           </div>
           <div class="lt-swatches" aria-hidden="true"><span style="--c:#1fa3ad"></span><span style="--c:#2f5f7f"></span><span style="--c:#8fa58a"></span><span style="--c:#e9b949"></span><span style="--c:#c27a5a"></span><span style="--c:#6e4a5e"></span><span style="--c:#263a57"></span></div>
@@ -300,8 +298,8 @@
     <section class="cta-band" aria-label="Get a free estimate">
       <div class="wrap cta-inner">
         <div>
-          <h2 class="reveal split">Ready for walls you're happy with?</h2>
-          <p class="reveal">Free, no-pressure estimates across Windsor and Essex County. Sam will come out, look at the job and give you an honest quote.</p>
+          <h2 class="reveal split" data-e="cta.title">Ready for walls you're happy with?</h2>
+          <p class="reveal" data-e="cta.text">Free, no-pressure estimates across Windsor and Essex County. Sam will come out, look at the job and give you an honest quote.</p>
         </div>
         <div class="cta-actions reveal">
           <a class="btn btn--ink btn--lg" href="/contact">Get my free estimate <span class="arr">&rarr;</span></a>

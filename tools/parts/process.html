@@ -3,7 +3,7 @@
       <div class="wrap">
         <div class="sec-head">
           <p class="eyebrow reveal">How it works</p>
-          <h2 id="proc-title" class="reveal split">{{process.title}}</h2>
+          <h2 id="proc-title" class="reveal split" data-e="{{@process.title}}">{{process.title}}</h2>
         </div>
         <div class="proc">
           <svg class="proc-line proc-line--h" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true"><path d="M60 80C220 -10 340 170 600 80S980 -10 1140 80" /></svg>
@@ -11,20 +11,20 @@
           <ol class="proc-steps">
             <li class="step">
               <span class="blob"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M52 6c18 0 30 12 38 26s6 32-4 46-26 18-40 16S16 86 10 70 6 36 18 22 34 6 52 6z" /></svg><b>1</b></span>
-              <h3>{{process.steps.0.title}}</h3>
-              <p>{{process.steps.0.text}}</p>
+              <h3 data-e="{{@process.steps.0.title}}">{{process.steps.0.title}}</h3>
+              <p data-e="{{@process.steps.0.text}}">{{process.steps.0.text}}</p>
               <a href="tel:+15199917783" class="step-link">519-991-7783</a>
             </li>
             <li class="step">
               <span class="blob"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M46 4c20-2 38 10 46 28s2 38-12 50-34 16-50 8S4 64 6 46 26 6 46 4z" /></svg><b>2</b></span>
-              <h3>{{process.steps.1.title}}</h3>
-              <p>{{process.steps.1.text}}</p>
+              <h3 data-e="{{@process.steps.1.title}}">{{process.steps.1.title}}</h3>
+              <p data-e="{{@process.steps.1.text}}">{{process.steps.1.text}}</p>
               <span class="step-link">No-cost visit</span>
             </li>
             <li class="step">
               <span class="blob"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 8c22-4 40 14 42 34s-8 40-28 48-40 2-50-14S4 40 14 26 30 12 50 8z" /></svg><b>3</b></span>
-              <h3>{{process.steps.2.title}}</h3>
-              <p>{{process.steps.2.text}}</p>
+              <h3 data-e="{{@process.steps.2.title}}">{{process.steps.2.title}}</h3>
+              <p data-e="{{@process.steps.2.text}}">{{process.steps.2.text}}</p>
               <span class="step-link">You come home happy</span>
             </li>
           </ol>
