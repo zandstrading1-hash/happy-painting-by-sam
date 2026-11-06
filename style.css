@@ -808,3 +808,7 @@ html:not(.js) .quote-text span { color: var(--ink); }
 @media (prefers-reduced-motion: reduce) {
   .ph-stroke { clip-path: none; }
 }
+
+/* Photos the client added from the dashboard, below any spot on a page */
+.x-photos { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+.x-photos img { flex: 1 1 240px; min-width: 0; max-width: 100%; height: auto; max-height: 460px; object-fit: cover; border-radius: 14px; }

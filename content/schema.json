@@ -145,6 +145,14 @@
         { "path": "pages.contact.title", "label": "Contact: title", "type": "text", "max": 70 },
         { "path": "pages.contact.description", "label": "Contact: description", "type": "textarea", "max": 200 }
       ]
+    },
+    {
+      "id": "everything",
+      "title": "Everything else",
+      "help": "Every other heading, button, menu item and photo on the site, plus any photos you add. Change them by clicking them in Edit on page.",
+      "fields": [
+        { "path": "free", "label": "Other text and photos", "type": "free" }
+      ]
     }
   ]
 }

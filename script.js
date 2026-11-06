@@ -460,7 +460,7 @@
 
   // every project photo on the page opens in the viewer
   const lb = $('.lightbox');
-  const zoomables = $$('.shot img, .pcard img, .svc-pic img, .teaser-grid img, .sd-media img, .ai-media img');
+  const zoomables = $$('.shot img, .pcard img, .svc-pic img, .teaser-grid img, .sd-media img, .ai-media img, .x-photos img');
   if (lb && zoomables.length) {
     const lbImg = $('.lb-fig img', lb), lbCap = $('.lb-fig figcaption', lb), lbCount = $('.lb-count', lb);
     let lbList = [], lbIdx = 0, lbReturn = null, sx = null;
