@@ -616,5 +616,10 @@
       "q": "What if I'm not happy with the result?",
       "a": "Then the job isn't done. Sam doesn't consider a job finished until you're happy with it. It's in the name."
     }
-  ]
+  ],
+  "free": {
+    "text": {},
+    "img": {},
+    "add": {}
+  }
 }
